@@ -1,0 +1,2617 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>ML on the Go | Graduate Machine Learning PWA</title>
+  
+  <!-- High-Resolution Neural Architecture Vector Icon (Favicon & Apple Touch) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231e1b4b'/%3E%3Cstop offset='50%25' stop-color='%23312e81'/%3E%3Cstop offset='100%25' stop-color='%230f172a'/%3E%3C/linearGradient%3E%3ClinearGradient id='neon' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2338bdf8'/%3E%3Cstop offset='50%25' stop-color='%23818cf8'/%3E%3Cstop offset='100%25' stop-color='%23c084fc'/%3E%3C/linearGradient%3E%3Cfilter id='glow' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeGaussianBlur stdDeviation='10' result='blur'/%3E%3CfeMerge%3E%3CfeMergeNode in='blur'/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Crect width='512' height='512' rx='128' fill='url(%23bg)'/%3E%3Crect width='500' height='500' x='6' y='6' rx='122' fill='none' stroke='url(%23neon)' stroke-width='4' opacity='0.4'/%3E%3Cg filter='url(%23glow)'%3E%3Cpath d='M140 180 L256 120 L372 180 L256 240 Z' fill='none' stroke='%2338bdf8' stroke-width='6' opacity='0.7'/%3E%3Cpath d='M140 180 L140 310 L256 370 L256 240 Z' fill='none' stroke='%23818cf8' stroke-width='6' opacity='0.7'/%3E%3Cpath d='M372 180 L372 310 L256 370 L256 240 Z' fill='none' stroke='%23c084fc' stroke-width='6' opacity='0.7'/%3E%3Cline x1='140' y1='180' x2='256' y2='240' stroke='%2338bdf8' stroke-width='4'/%3E%3Cline x1='256' y1='120' x2='256' y2='240' stroke='%23818cf8' stroke-width='4'/%3E%3Cline x1='372' y1='180' x2='256' y2='240' stroke='%23c084fc' stroke-width='4'/%3E%3Cline x1='140' y1='310' x2='256' y2='240' stroke='%23818cf8' stroke-width='4'/%3E%3Cline x1='372' y1='310' x2='256' y2='240' stroke='%23a855f7' stroke-width='4'/%3E%3Cline x1='256' y1='370' x2='256' y2='240' stroke='%236366f1' stroke-width='4'/%3E%3Ccircle cx='256' cy='120' r='18' fill='%2338bdf8'/%3E%3Ccircle cx='140' cy='180' r='18' fill='%2360a5fa'/%3E%3Ccircle cx='372' cy='180' r='18' fill='%23c084fc'/%3E%3Ccircle cx='256' cy='240' r='24' fill='%23ffffff' stroke='%236366f1' stroke-width='6'/%3E%3Ccircle cx='140' cy='310' r='18' fill='%23818cf8'/%3E%3Ccircle cx='372' cy='310' r='18' fill='%23e879f9'/%3E%3Ccircle cx='256' cy='370' r='18' fill='%23a855f7'/%3E%3C/g%3E%3Ctext x='256' y='452' font-family='system-ui, -apple-system, sans-serif' font-size='56' font-weight='900' fill='%23ffffff' text-anchor='middle' letter-spacing='6'%3EML%3C/text%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231e1b4b'/%3E%3Cstop offset='50%25' stop-color='%23312e81'/%3E%3Cstop offset='100%25' stop-color='%230f172a'/%3E%3C/linearGradient%3E%3ClinearGradient id='neon' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2338bdf8'/%3E%3Cstop offset='50%25' stop-color='%23818cf8'/%3E%3Cstop offset='100%25' stop-color='%23c084fc'/%3E%3C/linearGradient%3E%3Cfilter id='glow' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeGaussianBlur stdDeviation='10' result='blur'/%3E%3CfeMerge%3E%3CfeMergeNode in='blur'/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Crect width='512' height='512' rx='128' fill='url(%23bg)'/%3E%3Crect width='500' height='500' x='6' y='6' rx='122' fill='none' stroke='url(%23neon)' stroke-width='4' opacity='0.4'/%3E%3Cg filter='url(%23glow)'%3E%3Cpath d='M140 180 L256 120 L372 180 L256 240 Z' fill='none' stroke='%2338bdf8' stroke-width='6' opacity='0.7'/%3E%3Cpath d='M140 180 L140 310 L256 370 L256 240 Z' fill='none' stroke='%23818cf8' stroke-width='6' opacity='0.7'/%3E%3Cpath d='M372 180 L372 310 L256 370 L256 240 Z' fill='none' stroke='%23c084fc' stroke-width='6' opacity='0.7'/%3E%3Cline x1='140' y1='180' x2='256' y2='240' stroke='%2338bdf8' stroke-width='4'/%3E%3Cline x1='256' y1='120' x2='256' y2='240' stroke='%23818cf8' stroke-width='4'/%3E%3Cline x1='372' y1='180' x2='256' y2='240' stroke='%23c084fc' stroke-width='4'/%3E%3Cline x1='140' y1='310' x2='256' y2='240' stroke='%23818cf8' stroke-width='4'/%3E%3Cline x1='372' y1='310' x2='256' y2='240' stroke='%23a855f7' stroke-width='4'/%3E%3Cline x1='256' y1='370' x2='256' y2='240' stroke='%236366f1' stroke-width='4'/%3E%3Ccircle cx='256' cy='120' r='18' fill='%2338bdf8'/%3E%3Ccircle cx='140' cy='180' r='18' fill='%2360a5fa'/%3E%3Ccircle cx='372' cy='180' r='18' fill='%23c084fc'/%3E%3Ccircle cx='256' cy='240' r='24' fill='%23ffffff' stroke='%236366f1' stroke-width='6'/%3E%3Ccircle cx='140' cy='310' r='18' fill='%23818cf8'/%3E%3Ccircle cx='372' cy='310' r='18' fill='%23e879f9'/%3E%3Ccircle cx='256' cy='370' r='18' fill='%23a855f7'/%3E%3C/g%3E%3Ctext x='256' y='452' font-family='system-ui, -apple-system, sans-serif' font-size='56' font-weight='900' fill='%23ffffff' text-anchor='middle' letter-spacing='6'%3EML%3C/text%3E%3C/svg%3E">
+
+  <!-- Web App Manifest (Data URI with embedded vector app icon) -->
+  <link rel="manifest" href="data:application/manifest+json;utf8,%7B%22name%22%3A%22ML%20on%20the%20Go%22%2C%22short_name%22%3A%22MLontheGo%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23090d16%22%2C%22theme_color%22%3A%22%234f46e5%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20512%20512'%253E%253Cdefs%253E%253ClinearGradient%20id%3D'bg'%20x1%3D'0%2525'%20y1%3D'0%2525'%20x2%3D'100%2525'%20y2%3D'100%2525'%253E%253Cstop%20offset%3D'0%2525'%20stop-color%3D'%25231e1b4b'%2F%253E%253Cstop%20offset%3D'50%2525'%20stop-color%3D'%2523312e81'%2F%253E%253Cstop%20offset%3D'100%2525'%20stop-color%3D'%25230f172a'%2F%253E%253C%2FlinearGradient%253E%253ClinearGradient%20id%3D'neon'%20x1%3D'0%2525'%20y1%3D'0%2525'%20x2%3D'100%2525'%20y2%3D'100%2525'%253E%253Cstop%20offset%3D'0%2525'%20stop-color%3D'%252338bdf8'%2F%253E%253Cstop%20offset%3D'50%2525'%20stop-color%3D'%2523818cf8'%2F%253E%253Cstop%20offset%3D'100%2525'%20stop-color%3D'%2523c084fc'%2F%253E%253C%2FlinearGradient%253E%253C%2Fdefs%253E%253Crect%20width%3D'512'%20height%3D'512'%20rx%3D'128'%20fill%3D'url(%2523bg)'%2F%253E%253Crect%20width%3D'500'%20height%3D'500'%20x%3D'6'%20y%3D'6'%20rx%3D'122'%20fill%3D'none'%20stroke%3D'url(%2523neon)'%20stroke-width%3D'4'%20opacity%3D'0.4'%2F%253E%253Cpath%20d%3D'M140%20180%20L256%20120%20L372%20180%20L256%20240%20Z'%20fill%3D'none'%20stroke%3D'%252338bdf8'%20stroke-width%3D'6'%20opacity%3D'0.7'%2F%253E%253Cpath%20d%3D'M140%20180%20L140%20310%20L256%20370%20L256%20240%20Z'%20fill%3D'none'%20stroke%3D'%2523818cf8'%20stroke-width%3D'6'%20opacity%3D'0.7'%2F%253E%253Cpath%20d%3D'M372%20180%20L372%20310%20L256%20370%20L256%20240%20Z'%20fill%3D'none'%20stroke%3D'%2523c084fc'%20stroke-width%3D'6'%20opacity%3D'0.7'%2F%253E%253Cline%20x1%3D'140'%20y1%3D'180'%20x2%3D'256'%20y2%3D'240'%20stroke%3D'%252338bdf8'%20stroke-width%3D'4'%2F%253E%253Cline%20x1%3D'256'%20y1%3D'120'%20x2%3D'256'%20y2%3D'240'%20stroke%3D'%2523818cf8'%20stroke-width%3D'4'%2F%253E%253Cline%20x1%3D'372'%20y1%3D'180'%20x2%3D'256'%20y2%3D'240'%20stroke%3D'%2523c084fc'%20stroke-width%3D'4'%2F%253E%253Cline%20x1%3D'140'%20y1%3D'310'%20x2%3D'256'%20y2%3D'240'%20stroke%3D'%2523818cf8'%20stroke-width%3D'4'%2F%253E%253Cline%20x1%3D'372'%20y1%3D'310'%20x2%3D'256'%20y2%3D'240'%20stroke%3D'%2523a855f7'%20stroke-width%3D'4'%2F%253E%253Cline%20x1%3D'256'%20y1%3D'370'%20x2%3D'256'%20y2%3D'240'%20stroke%3D'%25236366f1'%20stroke-width%3D'4'%2F%253E%253Ccircle%20cx%3D'256'%20cy%3D'120'%20r%3D'18'%20fill%3D'%252338bdf8'%2F%253E%253Ccircle%20cx%3D'140'%20cy%3D'180'%20r%3D'18'%20fill%3D'%252360a5fa'%2F%253E%253Ccircle%20cx%3D'372'%20cy%3D'180'%20r%3D'18'%20fill%3D'%2523c084fc'%2F%253E%253Ccircle%20cx%3D'256'%20cy%3D'240'%20r%3D'24'%20fill%3D'%2523ffffff'%20stroke%3D'%25236366f1'%20stroke-width%3D'6'%2F%253E%253Ccircle%20cx%3D'140'%20cy%3D'310'%20r%3D'18'%20fill%3D'%2523818cf8'%2F%253E%253Ccircle%20cx%3D'372'%20cy%3D'310'%20r%3D'18'%20fill%3D'%2523e879f9'%2F%253E%253Ccircle%20cx%3D'256'%20cy%3D'370'%20r%3D'18'%20fill%3D'%2523a855f7'%2F%253E%253Ctext%20x%3D'256'%20y%3D'452'%20font-family%3D'system-ui%2C%20sans-serif'%20font-size%3D'56'%20font-weight%3D'900'%20fill%3D'%2523ffffff'%20text-anchor%3D'middle'%20letter-spacing%3D'6'%253EML%253C%2Ftext%253E%253C%2Fsvg%3E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ML on the Go">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { 
+            sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace']
+          },
+          colors: {
+            brand: { 50: '#eef2ff', 100: '#e0e7ff', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' },
+            darkbg: '#090d16',
+            cardbg: '#111726'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Mobile-first and OLED friendly styling */
+    .safe-top { padding-top: max(env(safe-area-inset-top), 12px); }
+    .safe-bottom { padding-bottom: max(env(safe-area-inset-bottom), 16px); }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .tap-press:active { transform: scale(0.97); transition: transform 0.08s ease; }
+    .math { font-family: 'Cambria Math', 'STIX Two Math', Georgia, serif; font-style: italic; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn { animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  </style>
+</head>
+<body class="bg-[#090d16] text-slate-100 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white transition-colors duration-200 overflow-x-hidden">
+
+  <!-- TOP APP HEADER -->
+  <header class="safe-top bg-[#090d16]/95 backdrop-blur-md sticky top-0 z-30 border-b border-slate-800/80">
+    <div class="max-w-2xl mx-auto px-4 py-2.5 flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2.5">
+        <!-- High-res Vector App Badge Icon -->
+        <div class="w-9 h-9 rounded-xl overflow-hidden shadow-lg shadow-indigo-600/30 flex-shrink-0 border border-indigo-400/30">
+          <svg class="w-full h-full" viewBox="0 0 512 512">
+            <defs>
+              <linearGradient id="headerBg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#1e1b4b"/>
+                <stop offset="50%" stop-color="#312e81"/>
+                <stop offset="100%" stop-color="#0f172a"/>
+              </linearGradient>
+            </defs>
+            <rect width="512" height="512" fill="url(#headerBg)"/>
+            <path d="M140 180 L256 120 L372 180 L256 240 Z" fill="none" stroke="#38bdf8" stroke-width="12" opacity="0.8"/>
+            <path d="M140 180 L140 310 L256 370 L256 240 Z" fill="none" stroke="#818cf8" stroke-width="12" opacity="0.8"/>
+            <path d="M372 180 L372 310 L256 370 L256 240 Z" fill="none" stroke="#c084fc" stroke-width="12" opacity="0.8"/>
+            <line x1="140" y1="180" x2="256" y2="240" stroke="#38bdf8" stroke-width="8"/>
+            <line x1="256" y1="120" x2="256" y2="240" stroke="#818cf8" stroke-width="8"/>
+            <line x1="372" y1="180" x2="256" y2="240" stroke="#c084fc" stroke-width="8"/>
+            <line x1="140" y1="310" x2="256" y2="240" stroke="#818cf8" stroke-width="8"/>
+            <line x1="372" y1="310" x2="256" y2="240" stroke="#a855f7" stroke-width="8"/>
+            <line x1="256" y1="370" x2="256" y2="240" stroke="#6366f1" stroke-width="8"/>
+            <circle cx="256" cy="120" r="28" fill="#38bdf8"/>
+            <circle cx="140" cy="180" r="28" fill="#60a5fa"/>
+            <circle cx="372" cy="180" r="28" fill="#c084fc"/>
+            <circle cx="256" cy="240" r="36" fill="#ffffff" stroke="#6366f1" stroke-width="10"/>
+            <circle cx="140" cy="310" r="28" fill="#818cf8"/>
+            <circle cx="372" cy="310" r="28" fill="#e879f9"/>
+            <circle cx="256" cy="370" r="28" fill="#a855f7"/>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-sm font-bold leading-tight tracking-tight text-white">ML on the Go</h1>
+            <span id="offlineBadge" class="text-[9px] uppercase font-bold tracking-widest px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Offline Ready</span>
+          </div>
+          <p class="text-[11px] text-slate-400 font-medium">Graduate & Researcher Practice</p>
+        </div>
+      </div>
+
+      <!-- Quick toggles & Install Button -->
+      <div class="flex items-center gap-1.5">
+        <button id="pwaInstallBtn" class="hidden items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-xs font-semibold shadow-md shadow-indigo-500/20 tap-press animate-pulse" title="Install App">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          <span class="hidden sm:inline">Install</span>
+        </button>
+        <button id="historyOpenBtn" class="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-slate-800/80 border border-slate-700 text-xs font-semibold text-indigo-300 hover:text-white tap-press" title="Review Past History">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span class="hidden sm:inline">History</span>
+        </button>
+        <button id="audioToggleBtn" class="p-2 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-300 hover:text-white tap-press" title="Toggle Sound">
+          <svg id="audioIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072M18.364 5.636a9 9 0 010 12.728M11 5L6 9H2v6h4l5 4V5z"/></svg>
+        </button>
+        <button id="streakBtn" class="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-slate-800/80 border border-slate-700 text-xs font-semibold text-amber-400" title="Streak & Mastery">
+          <span>🔥</span> <span id="streakCount">1</span>
+        </button>
+        <button id="searchOpenBtn" class="p-2 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-300 hover:text-white tap-press" title="Search Index">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- FILTER BAR / TABS -->
+    <div class="max-w-2xl mx-auto px-4 pb-2 flex items-center gap-1.5 overflow-x-auto no-scrollbar text-xs">
+      <button data-mode="all" class="mode-tab px-3 py-1.5 rounded-lg font-semibold whitespace-nowrap bg-indigo-600 text-white shadow-sm">Unseen Queue (<span id="unseenCount">102</span>)</button>
+      <button data-mode="drill" class="mode-tab px-3 py-1.5 rounded-lg font-medium whitespace-nowrap bg-slate-800 hover:bg-slate-750 text-slate-300">⚡ Drill</button>
+      <button data-mode="bookmarked" class="mode-tab px-3 py-1.5 rounded-lg font-medium whitespace-nowrap bg-slate-800 hover:bg-slate-750 text-slate-300">⭐ Saved (<span id="savedCount">0</span>)</button>
+      <button data-mode="mistakes" class="mode-tab px-3 py-1.5 rounded-lg font-medium whitespace-nowrap bg-slate-800 hover:bg-slate-750 text-slate-300">❌ Mistakes (<span id="mistakeCount">0</span>)</button>
+      <button id="filterModalBtn" class="px-3 py-1.5 rounded-lg font-medium whitespace-nowrap bg-slate-800 hover:bg-slate-750 text-slate-300 flex items-center gap-1">
+        <span>🏷️ Domains</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN VIEWPORT -->
+  <main class="flex-1 max-w-2xl w-full mx-auto p-4 flex flex-col justify-start">
+    
+    <!-- QUESTION META & NAVIGATION SLIDER -->
+    <div class="flex items-center justify-between text-xs mb-2.5 text-slate-400 font-mono">
+      <div class="flex items-center gap-1.5">
+        <span id="questionIndexBadge" class="bg-indigo-950/80 text-indigo-300 border border-indigo-800/50 px-2 py-0.5 rounded font-bold">Q 1 / 102</span>
+        <span id="questionTopicBadge" class="bg-slate-800/90 text-slate-300 px-2 py-0.5 rounded border border-slate-700/80 font-medium truncate max-w-[140px] sm:max-w-xs">Optimization</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="bookmarkBtn" class="p-1.5 text-slate-400 hover:text-amber-400 transition" title="Save Question">
+          <svg id="bookmarkIcon" class="w-5 h-5 fill-none stroke-currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- PROGRESS BAR -->
+    <div class="w-full bg-slate-800/90 h-1 rounded-full overflow-hidden mb-4">
+      <div id="progressBar" class="bg-gradient-to-r from-indigo-500 to-violet-500 h-full transition-all duration-300" style="width: 1%;"></div>
+    </div>
+
+    <!-- CARD CONTAINER -->
+    <div id="cardContainer" class="bg-[#111726] rounded-2xl border border-slate-800/90 p-5 shadow-2xl flex-1 flex flex-col justify-between">
+      <div>
+        <!-- Question Text -->
+        <h2 id="questionText" class="text-sm sm:text-base font-medium leading-relaxed text-slate-100 mb-4 select-text">
+          Loading question bank...
+        </h2>
+
+        <!-- Multiple Choice Options -->
+        <div id="optionsContainer" class="space-y-2.5">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- EXPLANATION DRAWER -->
+      <div id="explanationBox" class="mt-5 p-4 rounded-xl bg-slate-900/90 border border-slate-800 hidden animate-fadeIn">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-2">
+            <span id="feedbackIcon" class="text-base">💡</span>
+            <h3 id="feedbackTitle" class="text-xs font-bold tracking-wider uppercase text-indigo-400">Conceptual Analysis</h3>
+          </div>
+          <span id="correctBadge" class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400">Answer: Option B</span>
+        </div>
+        <p id="explanationText" class="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans"></p>
+      </div>
+    </div>
+
+    <!-- ON THE GO QUICK STATS -->
+    <div class="mt-3 px-2 flex items-center justify-between text-[11px] text-slate-400 font-mono">
+      <div>Completed: <strong id="statAnswered" class="text-slate-200">0</strong> / 102</div>
+      <div>Session Accuracy: <strong id="statAccuracy" class="text-emerald-400">0%</strong></div>
+      <div>Current Domain: <strong id="statActiveDomain" class="text-indigo-400">All</strong></div>
+    </div>
+  </main>
+
+  <!-- BOTTOM THUMB BAR & SHARE LINK -->
+  <footer class="safe-bottom bg-[#090d16]/95 backdrop-blur-md border-t border-slate-800/80 sticky bottom-0 z-30">
+    <div class="max-w-2xl mx-auto px-4 pt-2.5 pb-1 flex items-center justify-between gap-2.5">
+      <button id="prevBtn" class="flex-1 py-3 px-3 rounded-xl bg-slate-800/90 hover:bg-slate-750 text-slate-200 font-semibold text-xs flex items-center justify-center gap-1.5 border border-slate-750 tap-press disabled:opacity-40 disabled:pointer-events-none">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        <span>Prev</span>
+      </button>
+
+      <button id="revealBtn" class="py-3 px-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-750 text-indigo-300 border border-slate-750 text-xs font-semibold tap-press" title="Toggle Concept Explanation">
+        <span>💡 Explain</span>
+      </button>
+
+      <button id="jumpModalBtn" class="py-3 px-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-750 text-slate-300 border border-slate-750 font-mono text-xs font-bold tap-press" title="Grid Matrix">
+        <span id="jumpIndicator">1/102</span>
+      </button>
+
+      <button id="nextBtn" class="flex-2 flex-[1.4] py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-indigo-600/30 tap-press">
+        <span>Next</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+
+    <!-- SHARE APP LINK FOOTER -->
+    <div class="max-w-2xl mx-auto px-4 py-1.5 flex items-center justify-center gap-2">
+      <button id="shareAppBtn" class="flex items-center gap-1.5 text-xs text-slate-400 hover:text-indigo-400 font-medium transition py-1 px-3 rounded-lg hover:bg-slate-800/50 tap-press">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+        <span>Share ML on the Go</span>
+      </button>
+    </div>
+  </footer>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toastNotification" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white border border-slate-700 px-4 py-2 rounded-xl shadow-xl text-xs flex items-center gap-2 hidden transition-all duration-300">
+    <span id="toastMsg">Link copied to clipboard!</span>
+  </div>
+
+  <!-- DOMAIN FILTER MODAL -->
+  <div id="filterModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-[#111726] border border-slate-800 w-full sm:max-w-md rounded-t-3xl sm:rounded-2xl p-5 max-h-[85vh] flex flex-col animate-fadeIn">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
+        <div>
+          <h3 class="text-sm font-bold text-white tracking-wide uppercase">Select Subject Domain</h3>
+          <p class="text-[11px] text-slate-400">Filter practice questions by ML subdiscipline</p>
+        </div>
+        <button id="closeFilterBtn" class="text-slate-400 hover:text-white p-1">✕</button>
+      </div>
+      <div id="categoryListContainer" class="overflow-y-auto space-y-2 pr-1 flex-1 py-1">
+        <!-- Generated dynamically -->
+      </div>
+      <div class="pt-3 border-t border-slate-800 mt-3 flex items-center gap-2">
+        <button id="clearFiltersBtn" class="flex-1 py-2 rounded-xl bg-slate-800 hover:bg-slate-750 text-slate-300 text-xs font-semibold">Show All</button>
+        <button id="applyFiltersBtn" class="flex-1 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HISTORY & PAST ATTEMPTS MODAL -->
+  <div id="historyModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-[#111726] border border-slate-800 w-full sm:max-w-2xl rounded-t-3xl sm:rounded-2xl p-5 max-h-[85vh] flex flex-col animate-fadeIn">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
+        <div>
+          <h3 class="text-sm font-bold text-white tracking-wide uppercase">Practice History & Past Attempts</h3>
+          <p class="text-[11px] text-slate-400">Review all previously attempted questions, answers & explanations</p>
+        </div>
+        <button id="closeHistoryBtn" class="text-slate-400 hover:text-white p-1">✕</button>
+      </div>
+
+      <!-- History Filters -->
+      <div class="flex items-center gap-2 mb-3 text-xs overflow-x-auto no-scrollbar">
+        <button id="histFilterAll" class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white font-medium">All (<span id="histCountAll">0</span>)</button>
+        <button id="histFilterCorrect" class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 font-medium hover:bg-slate-750">Correct (<span id="histCountCorrect">0</span>)</button>
+        <button id="histFilterMistakes" class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 font-medium hover:bg-slate-750">Mistakes (<span id="histCountMistakes">0</span>)</button>
+        <button id="resetHistoryBtn" class="ml-auto text-xs text-rose-400 hover:text-rose-300 py-1 px-2 rounded hover:bg-rose-950/40 font-mono">Reset Queue</button>
+      </div>
+
+      <!-- History List -->
+      <div id="historyListContainer" class="overflow-y-auto space-y-3 pr-1 flex-1 text-xs">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- INSTALL INSTRUCTIONS MODAL (FALLBACK) -->
+  <div id="installModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#111726] border border-slate-800 w-full max-w-sm rounded-2xl p-5 animate-fadeIn text-center">
+      <div class="w-12 h-12 rounded-2xl bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center mx-auto mb-3 text-xl">
+        📲
+      </div>
+      <h3 class="text-sm font-bold text-white mb-2">Install ML on the Go</h3>
+      <p id="installModalText" class="text-xs text-slate-300 mb-4 leading-relaxed">
+        To install this app on iOS Safari: tap the <strong>Share</strong> button <svg class="inline w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg> at the bottom, then choose <strong>'Add to Home Screen'</strong>.
+      </p>
+      <button id="closeInstallModalBtn" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold">Got it</button>
+    </div>
+  </div>
+
+  <!-- QUESTION NAVIGATOR MODAL -->
+  <div id="jumpModal" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-[#111726] border border-slate-800 w-full sm:max-w-lg rounded-t-3xl sm:rounded-2xl p-5 max-h-[85vh] flex flex-col animate-fadeIn">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
+        <div>
+          <h3 class="text-sm font-bold text-white tracking-wide uppercase">Question Matrix (1-102)</h3>
+          <p class="text-[11px] text-slate-400">Green = Solved Correctly, Red = Missed, Gray = Unattempted</p>
+        </div>
+        <button id="closeJumpBtn" class="text-slate-400 hover:text-white p-1">✕</button>
+      </div>
+      <div id="jumpGrid" class="grid grid-cols-6 sm:grid-cols-8 gap-2 overflow-y-auto pr-1 flex-1 py-2">
+        <!-- Cells generated dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- SEARCH MODAL -->
+  <div id="searchModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex flex-col p-4 sm:p-6 items-center">
+    <div class="w-full max-w-xl bg-[#111726] border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="p-3 border-b border-slate-800 flex items-center gap-2">
+        <svg class="w-4 h-4 text-slate-400 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <input id="searchInput" type="text" placeholder="Search concept (e.g. RoPE, Rademacher, InfoNCE, AdamW)..." class="w-full bg-transparent text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none py-1.5 px-2">
+        <button id="closeSearchBtn" class="text-slate-400 hover:text-white px-2 text-xs">Esc</button>
+      </div>
+      <div id="searchResults" class="overflow-y-auto p-3 space-y-2 flex-1 text-xs divide-y divide-slate-800">
+        <!-- Results -->
+      </div>
+    </div>
+  </div>
+
+  <!-- SYNTHESIZED WEB AUDIO & HAPTIC ENGINE -->
+  <script>
+    const HapticAudio = {
+      ctx: null,
+      enabled: true,
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
+        }
+      },
+      vibrate(pattern) {
+        if (navigator.vibrate) {
+          try { navigator.vibrate(pattern); } catch (e) {}
+        }
+      },
+      playSuccess() {
+        this.vibrate([30, 20, 40]);
+        if (!this.enabled) return;
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(587.33, now); // D5
+          osc.frequency.exponentialRampToValueAtTime(880.00, now + 0.14); // A5
+          gain.gain.setValueAtTime(0.06, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.22);
+        } catch (e) {}
+      },
+      playError() {
+        this.vibrate([60]);
+        if (!this.enabled) return;
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(280, now);
+          osc.frequency.linearRampToValueAtTime(170, now + 0.18);
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.2);
+        } catch (e) {}
+      }
+    };
+  </script>
+
+  <!-- 102 RIGOROUS GRADUATE-LEVEL QUESTION BANK -->
+  <script>
+    const QUESTIONS_DATA = [
+      /* =========================================================================
+         DOMAIN 1: OPTIMIZATION & LOSS LANDSCAPES (17 Questions)
+         ========================================================================= */
+      {
+        id: 1,
+        topic: "Optimization & Landscapes",
+        question: "Why does decoupled weight decay (AdamW) exhibit markedly different regularization dynamics than standard L2 weight regularization in standard Adam?",
+        options: [
+          "Standard L2 regularization adds the weight penalty to the gradient before calculating moving second moments, meaning weights with historically large gradients experience proportionally less decay.",
+          "AdamW explicitly projects the weights onto a closed Euclidean ball of radius 1/λ at each step.",
+          "Standard L2 penalty scales weights quadratically, leading to floating point underflow on FP16 hardware.",
+          "AdamW eliminates the need for computing the first moment m_t, turning Adam into an exact second-order Newton step."
+        ],
+        answer: 0,
+        explanation: "In standard Adam with L2, the penalty term ∇L + λw is passed through the adaptive learning rate divisor √(v_t) + ε. Weights that update frequently with large gradient variance have high v_t, causing the effective weight decay to be divided by a large number and attenuated. AdamW decouples this by decaying w_t ← w_t(1 - ηλ) outside the moving average estimator."
+      },
+      {
+        id: 2,
+        topic: "Optimization & Landscapes",
+        question: "What does the Polyak-Łojasiewicz (PL) inequality establish regarding the optimization landscape of non-convex objective functions?",
+        options: [
+          "It proves that all critical points have strictly positive Hessian determinants.",
+          "It guarantees that every stationary point (where ∇f(w) = 0) is a global minimum, and gradient descent achieves linear convergence even without convexity.",
+          "It establishes that the loss function is bounded above by a quadratic upper envelope everywhere.",
+          "It proves that stochastic momentum terms cancel all saddle points in polynomial time."
+        ],
+        answer: 1,
+        explanation: "The PL inequality states 1/2 ||∇f(w)||^2 ≥ μ (f(w) - f*). While it does not imply convexity (sub-level sets need not be convex), it guarantees that any point where the gradient vanishes must attain the global minimum value f*, enabling linear convergence rates under gradient descent."
+      },
+      {
+        id: 3,
+        topic: "Optimization & Landscapes",
+        question: "In high-dimensional non-convex neural network loss landscapes, what is the primary geometric bottleneck that stalls vanilla gradient descent, as formalized by Dauphin et al.?",
+        options: [
+          "Isolated local minima whose loss is significantly higher than the global minimum.",
+          "High-index saddle points with negative curvature directions rather than bad local minima.",
+          "Discontinuous step chasms caused by non-differentiable activation functions.",
+          "Singularities where the loss diverges to positive infinity."
+        ],
+        answer: 1,
+        explanation: "Dauphin et al. (2014) applied random matrix theory to show that in d dimensions, the probability that all d eigenvalues of the Hessian are positive at a critical point scales as O(2^-d). Critical points are almost predominantly saddle points where gradients are tiny, yet escape trajectories along negative curvature directions exist."
+      },
+      {
+        id: 4,
+        topic: "Optimization & Landscapes",
+        question: "Why is the gradient clipping threshold typically applied to the global Euclidean norm of the concatenated gradient tensor rather than clipping each parameter element-wise?",
+        options: [
+          "Clipping element-wise alters the spatial direction of the gradient vector, whereas global norm clipping preserves gradient direction while purely bounding step magnitude.",
+          "Element-wise clipping requires solving an auxiliary quadratic programming problem.",
+          "Global norm clipping forces the Hessian matrix to remain symmetric positive definite.",
+          "Global norm clipping prevents floating point overflow in 8-bit quantization."
+        ],
+        answer: 0,
+        explanation: "Global norm clipping replaces g with (c / ||g||)·g whenever ||g|| > c. This ensures that the vector angle is exactly preserved, preventing unintended shifts in update direction that occur when individual tensor elements are arbitrarily clamped."
+      },
+      {
+        id: 5,
+        topic: "Optimization & Landscapes",
+        question: "What is the steady-state effective learning rate amplification factor for Polyak heavy-ball momentum with coefficient β on a consistent flat coordinate axis?",
+        options: [
+          "1 + β",
+          "1 / (1 - β)",
+          "1 / (1 - β^2)",
+          "β / (1 - β)"
+        ],
+        answer: 1,
+        explanation: "The velocity update is v_t = β v_{t-1} + η g_t. When the gradient g is constant across steps, v_t converges to the fixed point v = β v + η g, which yields v = (η / (1 - β)) g. Thus, the effective step size is amplified by 1 / (1 - β) (e.g., 10x for β = 0.9)."
+      },
+      {
+        id: 6,
+        topic: "Optimization & Landscapes",
+        question: "What is the exact mathematical purpose of the bias correction terms (1 - β1^t) and (1 - β2^t) in the Adam optimizer?",
+        options: [
+          "To enforce monotonic decay of the learning rate schedule over epochs.",
+          "To correct for the fact that the moving averages m_t and v_t are initialized at zero, which biases early estimates heavily toward zero.",
+          "To cancel the cross-entropy loss gradient singularity when probabilities approach zero.",
+          "To compute the exact diagonal of the Fisher information matrix."
+        ],
+        answer: 1,
+        explanation: "Expanding the recurrence m_t = β1 m_{t-1} + (1 - β1)g_t with m_0 = 0 yields m_t = (1 - β1) ∑_{i=1}^t β1^{t-i} g_i. Taking expectations assuming g_i comes from a stationary distribution gives E[m_t] = E[g_t] (1 - β1^t). Dividing by (1 - β1^t) un-biases the estimator from step 1."
+      },
+      {
+        id: 7,
+        topic: "Optimization & Landscapes",
+        question: "How does Sharpness-Aware Minimization (SAM) modify the empirical risk objective to achieve superior out-of-distribution generalization?",
+        options: [
+          "By adding an L1 penalty to the weights of the final classification layer.",
+          "By formulating a minimax objective that seeks parameters whose entire Euclidean neighborhood of radius ρ has low loss: min_w max_{||ε|| ≤ ρ} L(w + ε).",
+          "By projecting weights onto the null space of the input correlation matrix.",
+          "By enforcing orthogonal weight constraints at every stochastic gradient descent step."
+        ],
+        answer: 1,
+        explanation: "Foret et al. (2020) demonstrated that PAC-Bayes generalization bounds depend on both training error and the flatness/sharpness of the loss basin. SAM explicitly searches for flat minima by ascending along an adversarial perturbation ε before computing the descent update."
+      },
+      {
+        id: 8,
+        topic: "Optimization & Landscapes",
+        question: "What is the relationship between the largest eigenvalue λ_max of the Hessian matrix and the maximum stable learning rate η for gradient descent on an L-smooth objective?",
+        options: [
+          "η < 1 / λ_max",
+          "η < 2 / λ_max",
+          "η < λ_max / 2",
+          "η < √λ_max"
+        ],
+        answer: 1,
+        explanation: "For a quadratic proxy f(w) = 1/2 w^T H w, the gradient update along the principal eigenvector direction is w_{t+1} = (I - η H) w_t. Stability requires the spectral radius |1 - η λ_i| < 1 for all i, which dictates 1 - η λ_max > -1, or η < 2 / λ_max."
+      },
+      {
+        id: 9,
+        topic: "Optimization & Landscapes",
+        question: "Why does the natural gradient descent update w ← w - η F^{-1} ∇L differ fundamentally from standard Euclidean gradient descent?",
+        options: [
+          "It defines the steepest descent direction on the Riemannian manifold of probability distributions parameterized by w, using the Fisher Information Matrix F as the metric tensor.",
+          "It uses the inverse Jacobian of the training data matrix rather than the Hessian.",
+          "It replaces first-order derivatives with finite difference approximations.",
+          "It enforces strictly non-negative parameter weights."
+        ],
+        answer: 0,
+        explanation: "Amari's natural gradient minimizes loss subject to a small KL divergence distance D_KL(P_w || P_{w+dw}) ≤ c rather than Euclidean norm ||dw||_2 ≤ c. The Fisher Information Matrix F serves as the Riemannian metric tensor measuring change in output probability distributions."
+      },
+      {
+        id: 10,
+        topic: "Optimization & Landscapes",
+        question: "What phenomenon occurs in large-batch training known as the 'Generalization Gap' in deep neural networks?",
+        options: [
+          "Large batches consistently underfit the training data and fail to achieve zero training error.",
+          "Large batches tend to converge toward sharp minima with large positive Hessian eigenvalues, which hurts generalization on test distributions compared to the flat minima found by small batches.",
+          "Large batches suffer from arithmetic precision overflow during backpropagation.",
+          "Large batches cause gradient variances to grow exponentially."
+        ],
+        answer: 1,
+        explanation: "Keskar et al. (2016) demonstrated that small batches provide stochastic noise that acts as an implicit regularizer, escaping sharp basins and settling into flat, wide minima that tolerate covariate shift between train and test distributions."
+      },
+      {
+        id: 11,
+        topic: "Optimization & Landscapes",
+        question: "In Nesterov Accelerated Gradient (NAG), where is the gradient evaluated compared to standard Polyak momentum?",
+        options: [
+          "At the current parameter position w_t.",
+          "At the anticipated look-ahead position (w_t + β v_t).",
+          "At the running exponential average of past weights.",
+          "At the origin w = 0."
+        ],
+        answer: 1,
+        explanation: "Polyak momentum computes the gradient at the current position w_t and adds momentum. NAG computes the gradient at the 'look-ahead' point w_t + β v_t, providing a predictive damping correction that prevents overshooting sharp curves."
+      },
+      {
+        id: 12,
+        topic: "Optimization & Landscapes",
+        question: "Why is the Huber Loss preferred over Mean Squared Error (MSE) when training robust regression models on data contaminated with extreme outliers?",
+        options: [
+          "Huber loss is strictly non-convex, avoiding plateaus.",
+          "Huber loss is quadratic for small residuals |e| ≤ δ but transitions smoothly to linear |e| for large residuals, bounding gradient magnitude to a constant value.",
+          "Huber loss sets the gradient of large residuals to exactly zero.",
+          "Huber loss eliminates the need for computing parameter intercepts."
+        ],
+        answer: 1,
+        explanation: "MSE has quadratic penalty e^2, so its gradient 2e grows without bound, allowing a few corrupted outlier points to dominate parameter updates. Huber loss transitions to linear error for |e| > δ, capping the gradient magnitude at δ."
+      },
+      {
+        id: 13,
+        topic: "Optimization & Landscapes",
+        question: "In Stochastic Gradient Langevin Dynamics (SGLD), how is gradient descent converted into an MCMC algorithm for posterior sampling?",
+        options: [
+          "By multiplying the gradient by the inverse covariance of the batch.",
+          "By injecting Gaussian noise ε_t ~ N(0, 2η_t I) into each gradient step while decaying the step size η_t toward zero according to Robbins-Monro conditions.",
+          "By accepting or rejecting every mini-batch update using a Metropolis-Hastings test.",
+          "By replacing the loss function with the empirical entropy of the activations."
+        ],
+        answer: 1,
+        explanation: "Welling & Teh (2011) showed that adding scaled Brownian motion noise ε_t ~ N(0, 2η_t I) to mini-batch gradients causes the parameter trajectory to converge to the true posterior distribution as η_t → 0, without needing an expensive reject step."
+      },
+      {
+        id: 14,
+        topic: "Optimization & Landscapes",
+        question: "What does the condition number κ = λ_max / λ_min of the Hessian matrix dictate regarding first-order gradient descent convergence?",
+        options: [
+          "The number of epochs required scales inversely with κ.",
+          "When κ >> 1 (ill-conditioned anisotropic curvature), gradient steps oscillate severely along high-curvature ravines while making slow progress along flat low-curvature axes.",
+          "When κ = 1, gradient descent cannot converge to the global minimum.",
+          "A high condition number guarantees that the loss function is non-differentiable."
+        ],
+        answer: 1,
+        explanation: "On quadratic forms, standard gradient descent requires O(κ log(1/ε)) iterations. As κ diverges, the contours become elongated ellipses; gradients point nearly orthogonal to the direction toward the minimizer, causing oscillations."
+      },
+      {
+        id: 15,
+        topic: "Optimization & Landscapes",
+        question: "What is the gradient of the Softmax cross-entropy loss with respect to logit z_i for true one-hot target y?",
+        options: [
+          "∂L / ∂z_i = p_i - y_i",
+          "∂L / ∂z_i = (p_i - y_i) · p_i(1 - p_i)",
+          "∂L / ∂z_i = log(p_i) - y_i",
+          "∂L / ∂z_i = (y_i / p_i)"
+        ],
+        answer: 0,
+        explanation: "For L = - ∑ y_k log(p_k), substituting p_k = exp(z_k) / ∑ exp(z_j) and using ∂p_k / ∂z_i = p_i(δ_{ik} - p_k) yields the cancellation: ∂L / ∂z_i = p_i - y_i. This linear error residual prevents saturation slowdown."
+      },
+      {
+        id: 16,
+        topic: "Optimization & Landscapes",
+        question: "Why does the sign-gradient descent update w ← w - η sign(∇L) (used in Lion optimizer) provide distinct regularization characteristics compared to Adam?",
+        options: [
+          "It completely avoids tracking any first or second moments.",
+          "It forces every single coordinate update to have uniform magnitude η regardless of gradient scale, functioning as a robust L1-norm steepest descent.",
+          "It guarantees exact convergence to zero training error on any dataset.",
+          "It forces all weights to become strictly non-negative integers."
+        ],
+        answer: 1,
+        explanation: "The sign operator ensures every parameter changes by exactly ±η at each step. This makes updates robust to extreme gradient outliers and corresponds to steepest descent in the L_∞ norm, acting as an implicit L1 regularizer."
+      },
+      {
+        id: 17,
+        topic: "Optimization & Landscapes",
+        question: "What is an Edge of Stability (EOS) phenomenon observed in deep learning optimization with gradient descent?",
+        options: [
+          "The training loss diverges to infinity immediately after 10 epochs.",
+          "The maximum eigenvalue of the training Hessian (sharpness) self-tunes to hover just above 2/η, where loss oscillates non-monotonically yet continues to decrease over long timescales.",
+          "Weights drop to zero when the learning rate is less than 1e-5.",
+          "The model achieves zero test error while training error remains constant."
+        ],
+        answer: 1,
+        explanation: "Cohen et al. (2021) demonstrated that gradient descent does not stay in the regime of classical convex stability (where 2/η > λ_max). Instead, sharpness increases until λ_max > 2/η, entering a chaotic yet productive non-monotonic optimization trajectory."
+      },
+
+      /* =========================================================================
+         DOMAIN 2: DEEP ARCHITECTURE MECHANICS (17 Questions)
+         ========================================================================= */
+      {
+        id: 18,
+        topic: "Deep Architectures",
+        question: "In Scaled Dot-Product Attention Softmax(Q K^T / √d_k) V, why is the scalar scaling factor 1/√d_k indispensable?",
+        options: [
+          "To enforce unitary norm constraints on the query and key projection matrices.",
+          "Because for large d_k, the variance of the dot product grows proportionally to d_k, pushing the Softmax function into regions with near-zero gradients.",
+          "To prevent out-of-memory errors on GPU tensor cores.",
+          "To ensure the self-attention operation is strictly causal and upper triangular."
+        ],
+        answer: 1,
+        explanation: "If components of Q and K are independent random variables with zero mean and unit variance, their dot product ∑_{i=1}^{d_k} q_i k_i has mean 0 and variance d_k. For d_k = 128, values can be large (±30), where Softmax saturates and outputs near-one-hot distributions with vanishing gradients."
+      },
+      {
+        id: 19,
+        topic: "Deep Architectures",
+        question: "How does Rotary Position Embedding (RoPE) inject relative token order into transformer attention without absolute additive embeddings?",
+        options: [
+          "By multiplying word embeddings by an upper-triangular Toeplitz matrix.",
+          "By rotating 2D coordinate pairs of Query and Key vectors by an angle mθ proportional to token index m, such that their inner product depends solely on relative distance (m - n).",
+          "By adding sinusoidal frequencies to the attention weights post-softmax.",
+          "By convolving hidden states with a fixed Gaussian filter."
+        ],
+        answer: 1,
+        explanation: "Su et al. (2021) showed that applying 2D rotation matrices R_{Θ,m} to queries and R_{Θ,n} to keys yields <R_m q, R_n k> = q^T R_{Θ, n-m} k. The resulting dot product naturally parameterizes relative offset (n - m) while preserving vector norms."
+      },
+      {
+        id: 20,
+        topic: "Deep Architectures",
+        question: "What is the primary operational efficiency gain of Grouped-Query Attention (GQA) over standard Multi-Head Attention (MHA)?",
+        options: [
+          "GQA slashes the number of parameters in the Feedforward (MLP) layers by 50%.",
+          "GQA shares single Key and Value heads across groups of Query heads, dramatically reducing the memory footprint and bandwidth demands of the KV Cache during autoregressive generation.",
+          "GQA makes self-attention linear in time complexity O(N).",
+          "GQA allows transformers to process infinite sequence lengths without positional encoding."
+        ],
+        answer: 1,
+        explanation: "During autoregressive decoding, reading the KV cache from high-bandwidth memory (HBM) to on-chip SRAM is memory-bound. GQA groups query heads (e.g., 8 queries per 1 KV head), reducing KV cache reads by 8x with minimal degradation in model quality."
+      },
+      {
+        id: 21,
+        topic: "Deep Architectures",
+        question: "How does FlashAttention achieve 2-4x speedups without any mathematical approximation or loss of numerical precision?",
+        options: [
+          "By quantizing all attention weights to 4-bit integers dynamically.",
+          "By tiling Q, K, and V into blocks that fit within fast on-chip SRAM and utilizing the online Softmax algorithm to compute attention incrementally without materializing the N × N matrix in GPU HBM.",
+          "By removing the Softmax activation and replacing it with a linear projection.",
+          "By computing singular value decomposition on the attention matrix."
+        ],
+        answer: 1,
+        explanation: "Dao et al. recognized that attention runtime is bottlenecked by HBM memory traffic (reading/writing the N×N intermediate matrix). FlashAttention uses block tiling and maintains running Softmax normalizers to perform the entire attention computation directly in fast SRAM."
+      },
+      {
+        id: 22,
+        topic: "Deep Architectures",
+        question: "What differentiates RMSNorm (Root Mean Square Normalization) from standard Layer Normalization (LayerNorm)?",
+        options: [
+          "RMSNorm normalizes across the batch dimension instead of hidden features.",
+          "RMSNorm assumes activations are zero-mean and eliminates mean centering, dividing solely by the root mean square of activations to save roughly 7% of computation time.",
+          "RMSNorm replaces learnable affine parameters γ and β with fixed constants.",
+          "RMSNorm can only be evaluated on convolutional layers."
+        ],
+        answer: 1,
+        explanation: "Zhang & Sennrich (2019) demonstrated that the scaling property of LayerNorm is what stabilizes training, while mean centering (x - μ) is largely redundant. RMSNorm computes x / √(1/d ∑ x_i^2 + ε) · γ, avoiding two reduction passes across the hidden dimension."
+      },
+      {
+        id: 23,
+        topic: "Deep Architectures",
+        question: "Why does Pre-LayerNorm (Pre-LN) provide superior optimization stability over original Transformer Post-LayerNorm (Post-LN)?",
+        options: [
+          "Pre-LN completely eliminates residual skip connections.",
+          "Pre-LN normalizes the input to the sub-layer on the residual branch, preserving an unhindered identity highway x_{l+1} = x_l + F(LN(x_l)) that allows gradients to flow directly from the final layer to initial layers.",
+          "Pre-LN forces all attention weights to sum to 1 before multiplication.",
+          "Post-LN cannot be executed on GPU hardware due to synchronization deadlocks."
+        ],
+        answer: 1,
+        explanation: "In Post-LN, x_{l+1} = LN(x_l + F(x_l)). The normalization of the entire sum attenuates gradients in deep layers, requiring warm-up schedules to prevent divergence. Pre-LN keeps an clean identity path, enabling stable training with higher learning rates."
+      },
+      {
+        id: 24,
+        topic: "Deep Architectures",
+        question: "What is the theoretical receptive field of a deep convolutional network composed of L layers of 3×3 convolutions with stride 1 and no pooling?",
+        options: [
+          "3 · L",
+          "2 · L + 1",
+          "3^L",
+          "2^L + 1"
+        ],
+        answer: 1,
+        explanation: "Each additional 3×3 convolution with stride 1 expands the receptive field by (kernel_size - 1) = 2 pixels on each dimension. Starting from 1 pixel at layer 0, after L layers the receptive field is 1 + 2L = 2L + 1."
+      },
+      {
+        id: 25,
+        topic: "Deep Architectures",
+        question: "Why does SwiGLU (Swish-Gated Linear Unit) consistently outperform standard ReLU or GELU MLPs in modern LLMs like LLaMA?",
+        options: [
+          "It reduces the parameter count of the feedforward layer by half.",
+          "It incorporates a bilinear multiplicative gating mechanism (Swish(x W) ⊙ (x V)) W_2, providing richer inductive bias and multiplicative interactions between features.",
+          "It guarantees that all hidden activations are strictly orthogonal.",
+          "It allows transformers to bypass the self-attention layer entirely."
+        ],
+        answer: 1,
+        explanation: "Shazeer (2020) demonstrated that GLU variants with non-linear Swish gating offer superior gradient flow and representation capacity compared to standard single-branch activations (ReLU(xW)W_2), consistently reducing perplexity per parameter."
+      },
+      {
+        id: 26,
+        topic: "Deep Architectures",
+        question: "What is the computational and memory complexity of autoregressive inference for generating a single new token at sequence length N with standard dense KV caching?",
+        options: [
+          "O(1) compute, O(N) memory",
+          "O(N) compute, O(N) memory",
+          "O(N^2) compute, O(N^2) memory",
+          "O(N) compute, O(1) memory"
+        ],
+        answer: 1,
+        explanation: "With KV caching, keys and values for prior tokens are stored (O(N) memory). To generate token N+1, only one new query vector is projected, which performs a dot product against all N cached keys and values (O(N) compute)."
+      },
+      {
+        id: 27,
+        topic: "Deep Architectures",
+        question: "What fundamental vulnerability in recurrent neural networks (RNNs) does the Long Short-Term Memory (LSTM) cell design resolve via its constant error carousel (CEC)?",
+        options: [
+          "The inability to process batches of variable lengths.",
+          "The exponential decay or explosion of gradients over long time horizons due to continuous multiplication by weight matrices W_{hh}^T during backpropagation through time.",
+          "The non-differentiability of hidden states.",
+          "The requirement for positional embeddings."
+        ],
+        answer: 1,
+        explanation: "In an RNN, ∂h_T / ∂h_t involves ∏ W_{hh}^T, causing vanishing or exploding gradients. The LSTM introduces an additive cell state c_t = f_t ⊙ c_{t-1} + i_t ⊙ c̃_t. When the forget gate f_t = 1, gradients flow back across time without exponential dampening."
+      },
+      {
+        id: 28,
+        topic: "Deep Architectures",
+        question: "What is the primary role of Depthwise Separable Convolutions (used in MobileNet)?",
+        options: [
+          "To compute 3D volumetric convolutions on video data.",
+          "To factorize standard convolution into a spatial depthwise convolution (one filter per channel) followed by a 1×1 pointwise convolution (mixing channels), reducing computation by roughly 8-9x.",
+          "To eliminate all non-linear activation layers in convolutional backbones.",
+          "To project 2D image coordinates into spherical harmonics."
+        ],
+        answer: 1,
+        explanation: "Standard convolution costs D_K · D_K · M · N · D_F · D_F operations. Depthwise separable decomposes this into depthwise (D_K · D_K · M · D_F · D_F) and pointwise (M · N · D_F · D_F), reducing operations by roughly 1/N + 1/D_K^2 (an 88-90% saving for 3x3 kernels)."
+      },
+      {
+        id: 29,
+        topic: "Deep Architectures",
+        question: "Why does Batch Normalization behave inconsistently when applied to recurrent neural networks or autoregressive sequence decoders?",
+        options: [
+          "Because recurrent activations diverge to infinity within 2 steps.",
+          "Because sequence lengths vary across batches, and calculating batch statistics along the temporal axis couples independent sequences and requires maintaining separate running statistics for each timestep.",
+          "Because backpropagation through time cannot compute second derivatives.",
+          "Because batch normalization requires all mini-batch sizes to be powers of two."
+        ],
+        answer: 1,
+        explanation: "BatchNorm computes statistics across batch samples for each feature. In sequences with dynamic lengths, batches have few active tokens at later timesteps, leading to noisy running statistics. Furthermore, test sequences longer than any seen in training lack running stats."
+      },
+      {
+        id: 30,
+        topic: "Deep Architectures",
+        question: "In Vision Transformers (ViT), what crucial structural element substitutes for the translational equivariance inherently baked into CNNs?",
+        options: [
+          "Bilinear interpolation pooling layers.",
+          "Patch tokenization (flattening 16×16 patches into vectors) combined with learnable 1D position embeddings and global self-attention across all patch tokens.",
+          "Circular padding at the image boundary.",
+          "Fixed discrete wavelet transforms applied to the input channels."
+        ],
+        answer: 1,
+        explanation: "ViT removes convolutional inductive biases (locality and translation equivariance). Instead, images are chopped into patches treated as token vectors. ViT must learn spatial relationships from scratch via self-attention and position embeddings."
+      },
+      {
+        id: 31,
+        topic: "Deep Architectures",
+        question: "What does the 'Dying ReLU' problem describe, and what structural condition causes it?",
+        options: [
+          "The gradual decay of learning rate over training epochs.",
+          "When a neuron's weights receive an update such that the net input is negative for all training samples, resulting in zero activation and zero gradient permanently freezing the neuron.",
+          "When activations exceed 65504 in FP16 precision.",
+          "When the loss function reaches a saddle point with negative eigenvalues."
+        ],
+        answer: 1,
+        explanation: "For ReLU(z) = max(0, z), if a large gradient update shifts weights such that z = w^T x + b < 0 for all x in the dataset, the gradient ∂ReLU/∂z is 0 everywhere. The neuron can never recover because no error gradient passes through it."
+      },
+      {
+        id: 32,
+        topic: "Deep Architectures",
+        question: "How does State Space Modeling (as in Mamba / S4) circumvent the O(N^2) attention bottleneck in long sequences?",
+        options: [
+          "By pruning all tokens that have low TF-IDF scores.",
+          "By discretizing continuous linear differential equations (h'(t) = Ah(t) + Bx(t)) into a selective recurrent state representation that computes in linear time O(N) during inference while parallelizing via associative scan during training.",
+          "By running multiple autoregressive models in parallel and voting.",
+          "By projecting tokens onto a random orthogonal subspace."
+        ],
+        answer: 1,
+        explanation: "Mamba models sequence dynamics via time-varying state space equations. By utilizing hardware-aware parallel prefix associative scans, it trains in O(N) time without storing an N×N attention matrix, and maintains an O(1) state per step during autoregression."
+      },
+      {
+        id: 33,
+        topic: "Deep Architectures",
+        question: "What is the primary motivation for Cross-Attention layers in encoder-decoder architectures like original T5 or Stable Diffusion?",
+        options: [
+          "To allow decoder tokens to attend directly to latent contextual representations produced by an external encoder condition.",
+          "To compute attention between consecutive mini-batches.",
+          "To calculate bidirectional representations within the decoder alone.",
+          "To merge key and value vectors into a single scalar."
+        ],
+        answer: 0,
+        explanation: "In cross-attention, Query vectors are generated from the decoder's intermediate activations, while Key and Value vectors are derived from the encoder's output representations. This allows the decoder to condition on the source sequence or text prompt."
+      },
+      {
+        id: 34,
+        topic: "Deep Architectures",
+        question: "What mathematical property distinguishes He (Kaiming) initialization from Xavier (Glorot) initialization?",
+        options: [
+          "He initialization sets all bias terms to 1.0.",
+          "He initialization accounts for the rectification of ReLU by multiplying the variance scaling factor by 2 (Var(W) = 2 / n_in), compensating for the fact that roughly half of activations are zeroed out.",
+          "He initialization samples strictly from a Cauchy distribution.",
+          "He initialization is designed exclusively for unitary complex matrices."
+        ],
+        answer: 1,
+        explanation: "For zero-mean symmetric inputs, ReLU zeroes out the negative half, halving the expected variance of the layer's output. To keep activation variance constant across deep layers, He initialization scales weight variance by 2/n_in instead of Xavier's 1/n_in."
+      },
+
+      /* =========================================================================
+         DOMAIN 3: STATISTICAL LEARNING & GENERALIZATION (17 Questions)
+         ========================================================================= */
+      {
+        id: 35,
+        topic: "Statistical Learning",
+        question: "In Probably Approximately Correct (PAC) learning theory, what does the sample complexity m(ε, δ) quantify?",
+        options: [
+          "The maximum number of training steps before an optimizer hits a local minimum.",
+          "The minimum number of training examples required such that with probability at least (1 - δ), the learned hypothesis has true generalization error at most ε.",
+          "The ratio of training samples to testing samples in nested cross-validation.",
+          "The number of parameters a network must possess to memorize a dataset."
+        ],
+        answer: 1,
+        explanation: "PAC learnability guarantees that with high confidence (1 - δ), the excess risk R(h) - R(h*) is bounded by ε. The sample complexity m(ε, δ) establishes the mathematical bound on dataset size needed to achieve this guarantee."
+      },
+      {
+        id: 36,
+        topic: "Statistical Learning",
+        question: "How does Empirical Rademacher Complexity quantify the capacity of a hypothesis class F, and why is it superior to VC dimension?",
+        options: [
+          "It counts the number of parameters with non-zero weights.",
+          "It measures the hypothesis class's ability to correlate with random Rademacher noise (±1 signs) on the specific data sample, making it data-dependent unlike the distribution-free worst-case VC dimension.",
+          "It measures the spectral radius of the empirical covariance matrix.",
+          "It bounds the gradient Lipschitz constant of the loss function."
+        ],
+        answer: 1,
+        explanation: "Empirical Rademacher complexity R_S(F) = E_σ [ sup_{f ∈ F} 1/m ∑ σ_i f(x_i) ] tests whether the function family can fit pure random coin flips. Because it is calculated directly on sample S, it captures data distribution structure rather than worst-case pathological arrangements."
+      },
+      {
+        id: 37,
+        topic: "Statistical Learning",
+        question: "What occurs at the 'Interpolation Threshold' in the Modern Double Descent phenomenon (Belkin et al.)?",
+        options: [
+          "The test error reaches its absolute global minimum.",
+          "The model capacity is barely sufficient to achieve zero training error; the model is forced to fit every data point and noise spike with zero slack, causing parameter norms and test risk to peak catastrophically.",
+          "The training loss plateaus at a high non-zero constant.",
+          "The number of support vectors drops to zero."
+        ],
+        answer: 1,
+        explanation: "At the interpolation boundary (p ≈ n), only one unique interpolating solution exists. To pass through noisy labels, the function develops extreme oscillations, exploding parameter variance. Beyond this point (p >> n), overparameterization allows selecting minimum-norm solutions that smooth predictions."
+      },
+      {
+        id: 38,
+        topic: "Statistical Learning",
+        question: "What does the Gauss-Markov Theorem assert regarding the Ordinary Least Squares (OLS) estimator β̂ = (X^T X)^{-1} X^T y?",
+        options: [
+          "OLS is the maximum likelihood estimator for any arbitrary noise distribution.",
+          "Under the conditions of zero error mean, homoscedasticity, and uncorrelated errors, OLS is the Best Linear Unbiased Estimator (BLUE), possessing the minimum variance among all linear unbiased estimators.",
+          "OLS minimizes test risk on out-of-distribution covariates.",
+          "OLS parameter estimates are invariant to collinearity among predictors."
+        ],
+        answer: 1,
+        explanation: "The Gauss-Markov theorem states that if errors have mean zero, constant variance σ^2 I, and are uncorrelated, no linear unbiased estimator has smaller variance than β̂_OLS. (Note: biased estimators like Ridge can achieve lower total MSE)."
+      },
+      {
+        id: 39,
+        topic: "Statistical Learning",
+        question: "What is the Vapnik-Chervonenkis (VC) dimension of the hypothesis class of 2D linear classifiers (hyperplanes in R^2)?",
+        options: [
+          "2",
+          "3",
+          "4",
+          "Infinite"
+        ],
+        answer: 1,
+        explanation: "A set of 3 non-collinear points in R^2 can be shattered (assigned all 2^3 = 8 binary labeling combinations). However, no set of 4 points can be shattered (due to Radon's theorem, an XOR arrangement cannot be separated linearly). Thus, VC dimension = 3."
+      },
+      {
+        id: 40,
+        topic: "Statistical Learning",
+        question: "How does L1 regularization (Lasso) inherently perform sparse feature selection, whereas L2 regularization (Ridge) only shrinks weights toward zero?",
+        options: [
+          "L1 regularization has non-differentiable sharp corners at zero on the coordinate axes, making contour tangencies with the empirical loss ellipse occur precisely where weights equal zero.",
+          "L1 regularized loss functions are strictly non-convex.",
+          "L2 regularization penalizes small weights more aggressively than large weights.",
+          "L1 regularization discards features with low variance prior to fitting."
+        ],
+        answer: 0,
+        explanation: "The L1 constraint ball is a hyper-cross-polytope (diamond in 2D) with sharp vertices positioned on the coordinate axes. Level sets of the smooth quadratic loss function typically touch these non-smooth corners first, setting the corresponding coordinate weights identically to 0."
+      },
+      {
+        id: 41,
+        topic: "Statistical Learning",
+        question: "What is Implicit Regularization in the context of overparameterized deep neural networks trained with gradient descent?",
+        options: [
+          "The regularization effect achieved by adding explicit dropout layers.",
+          "The mathematical tendency of gradient descent initialized near zero to converge to solutions with minimal norm (such as minimum Euclidean norm or lowest rank), even in the absence of explicit penalty terms.",
+          "The pruning of small weights during post-training quantization.",
+          "The clipping of gradients during backpropagation."
+        ],
+        answer: 1,
+        explanation: "Soudry et al. (2018) showed that gradient descent on unregularized overparameterized models does not settle on arbitrary interpolators; its optimization trajectory biases it toward minimum L2-norm solutions in linear classification and low-rank factorizations in matrix sensing."
+      },
+      {
+        id: 42,
+        topic: "Statistical Learning",
+        question: "In the classical Bias-Variance decomposition of Expected Mean Squared Error, what third fundamental component is irreducible?",
+        options: [
+          "Algorithmic approximation bias",
+          "Sample estimation variance",
+          "Intrinsic data noise variance σ^2",
+          "Optimization convergence slack"
+        ],
+        answer: 2,
+        explanation: "E[(y - f̂(x))^2] = Bias[f̂(x)]^2 + Var[f̂(x)] + σ^2. The term σ^2 represents the inherent stochasticity/noise in the target variable y = f(x) + ε where Var(ε) = σ^2. No hypothesis class can reduce error below σ^2."
+      },
+      {
+        id: 43,
+        topic: "Statistical Learning",
+        question: "What does the No Free Lunch (NFL) theorem for machine learning formally prove?",
+        options: [
+          "No deep network can achieve zero error on unseen data.",
+          "Averaged over all possible data-generating distributions, every learning algorithm has identical expected performance; superior performance on one class of problems requires specific inductive biases.",
+          "Convolutional architectures are mathematically equivalent to fully connected networks.",
+          "Unsupervised learning requires infinite data samples to discover true underlying clusters."
+        ],
+        answer: 1,
+        explanation: "Wolpert & Macready (1997) proved that if all target functions are equally likely, any algorithm will perform identically when evaluated over all unobserved inputs. Success in real-world ML relies strictly on inductive priors matching reality."
+      },
+      {
+        id: 44,
+        topic: "Statistical Learning",
+        question: "What is the key advantage of Nested Cross-Validation over standard k-fold Cross-Validation?",
+        options: [
+          "It trains k times faster by sharing cached gradients.",
+          "It prevents optimistic performance estimation bias by separating hyperparameter tuning (inner loop) from unbiased model generalization evaluation (outer loop).",
+          "It eliminates the need for a dedicated training set.",
+          "It guarantees zero variance in the estimated model parameters."
+        ],
+        answer: 1,
+        explanation: "If hyperparameters are tuned on the same cross-validation splits used to report final model error, information leaks, producing optimistic bias. Nested CV optimizes hyperparameters in an inner CV loop and evaluates the resulting pipeline on an outer test fold."
+      },
+      {
+        id: 45,
+        topic: "Statistical Learning",
+        question: "What is Benign Overfitting in deep learning theory (Bartlett et al.)?",
+        options: [
+          "When a model overfits to the training set and fails catastrophically on the test set.",
+          "A phenomenon where an overparameterized model interpolates noisy training labels perfectly, yet still generalizes well because the noise is absorbed into high-frequency, low-energy orthogonal dimensions without damaging the core signal.",
+          "Overfitting that can be cured by early stopping at epoch 1.",
+          "When test loss drops to zero before training loss."
+        ],
+        answer: 1,
+        explanation: "Bartlett et al. (2020) demonstrated that in overparameterized regimes with an effective covariance spectrum decaying at an appropriate rate, the interpolating model distributes label noise over a vast number of irrelevant dimensions, preserving the underlying predictor."
+      },
+      {
+        id: 46,
+        topic: "Statistical Learning",
+        question: "Why is the F1-score or Precision-Recall Area Under the Curve (PR-AUC) preferred over ROC-AUC on datasets with extreme class imbalance?",
+        options: [
+          "ROC-AUC is computationally non-differentiable.",
+          "The False Positive Rate (FPR) denominator contains True Negatives (TN); when TN is vast, massive spikes in False Positives barely alter FPR, making ROC-AUC appear deceptively high despite poor precision.",
+          "PR-AUC is always mathematically larger than ROC-AUC.",
+          "ROC-AUC cannot be calculated for binary classification tasks."
+        ],
+        answer: 1,
+        explanation: "FPR = FP / (FP + TN). If TN = 1,000,000 and FP jumps from 10 to 1,000, FPR increases by a negligible 0.001 (ROC looks stellar). However, if TP = 100, Precision drops from 91% down to 9%, immediately revealed by PR curves."
+      },
+      {
+        id: 47,
+        topic: "Statistical Learning",
+        question: "What does the Karush-Kuhn-Tucker (KKT) complementary slackness condition α_i [y_i (w^T x_i + b) - 1] = 0 reveal in Support Vector Machines?",
+        options: [
+          "All data points have non-zero Lagrange multipliers α_i.",
+          "Only points that lie exactly on the margin boundary (or violate it) have α_i > 0; all other correctly classified points strictly outside the margin have α_i = 0 and exert zero influence on the decision boundary.",
+          "The optimal weight vector w must be orthogonal to the bias b.",
+          "The margin width is proportional to the number of training samples."
+        ],
+        answer: 1,
+        explanation: "By complementary slackness, if y_i(w^T x_i + b) > 1 (the point is safely beyond the margin), α_i must be 0. Thus, the solution w = ∑ α_i y_i x_i is sparse and determined entirely by the active support vectors on or inside the margin."
+      },
+      {
+        id: 48,
+        topic: "Statistical Learning",
+        question: "What is the Brier Score, and why is it considered a strictly proper scoring rule?",
+        options: [
+          "It measures the classification accuracy at threshold 0.5.",
+          "It measures the mean squared difference between predicted probabilities and binary outcomes: 1/N ∑ (p_i - y_i)^2; it is strictly proper because expected score is minimized if and only if the model predicts the true conditional probability.",
+          "It measures the ratio of true positives to false negatives.",
+          "It calculates the entropy of the confusion matrix."
+        ],
+        answer: 1,
+        explanation: "A proper scoring rule incentivizes the forecaster to report their true subjective probability distribution. Brier score penalizes both miscalibration and uncertainty; reporting any probability p differing from the true data distribution increases the expected loss."
+      },
+      {
+        id: 49,
+        topic: "Statistical Learning",
+        question: "In Random Forests, how does combining Bootstrap Aggregating (Bagging) with Random Feature Subspace selection (Feature Bagging) drive down prediction variance?",
+        options: [
+          "By increasing the depth of individual trees.",
+          "The variance of an average of B trees is ρ σ^2 + (1-ρ)/B σ^2; random feature splits decorrelate the individual trees (lowering pairwise correlation ρ), allowing ensemble averaging to drive total variance down toward zero.",
+          "By eliminating all leaves with fewer than 10 samples.",
+          "By forcing individual decision trees to have linear boundaries."
+        ],
+        answer: 1,
+        explanation: "Simple bagging reduces variance by 1/B only if trees are independent (ρ = 0). Since identical dominant features cause trees to make correlated splits, Random Forest forces each split to choose from a random subset of features (√p), reducing ρ and overall variance."
+      },
+      {
+        id: 50,
+        topic: "Statistical Learning",
+        question: "What does Simpson's Paradox demonstrate in empirical machine learning and observational causal analysis?",
+        options: [
+          "Training loss can decrease while validation loss increases.",
+          "A statistical association or trend observed across separate sub-populations can completely reverse direction when the sub-populations are combined, caused by failure to control for an unobserved confounding variable.",
+          "High collinearity between predictors makes parameter estimates unbiased.",
+          "Decision trees overfit faster than linear models."
+        ],
+        answer: 1,
+        explanation: "Simpson's paradox occurs when an unconditioned confounder partitions data unevenly. For example, a treatment may look beneficial in both male and female groups separately, yet look harmful overall if the treatment was assigned disproportionately to a group with higher baseline risk."
+      },
+      {
+        id: 51,
+        topic: "Statistical Learning",
+        question: "What is Expected Calibration Error (ECE) and how does Temperature Scaling address miscalibration in deep neural networks?",
+        options: [
+          "ECE measures hardware throughput error; Temperature scaling adjusts the clock speed.",
+          "ECE measures the discrepancy between predicted confidence and actual empirical accuracy across binned predictions; Temperature scaling divides logits by a learned scalar T > 1 to soften overconfident probabilities without changing class rankings.",
+          "ECE computes the L1 norm of the gradient; Temperature scaling adds Gaussian noise to the weights.",
+          "ECE evaluates the condition number of the Hessian matrix."
+        ],
+        answer: 1,
+        explanation: "Guo et al. (2017) demonstrated modern deep networks are overconfident (e.g., predictions with 95% confidence only achieve 80% accuracy). Dividing logits by learned scalar T softens probabilities to align confidence with empirical frequencies without altering argmax accuracy."
+      },
+
+      /* =========================================================================
+         DOMAIN 4: GENERATIVE MODELING & PROBABILISTIC AI (17 Questions)
+         ========================================================================= */
+      {
+        id: 52,
+        topic: "Generative Models",
+        question: "In Variational Autoencoders (VAEs), what is the primary purpose of the Reparameterization Trick z = μ_θ(x) + σ_θ(x) ⊙ ε with ε ~ N(0, I)?",
+        options: [
+          "To enforce non-negativity on the latent space embeddings.",
+          "To isolate the non-differentiable stochastic sampling operation into an independent noise variable ε, allowing backpropagation of error gradients with respect to encoder parameters μ and σ.",
+          "To ensure the latent representation has zero empirical covariance.",
+          "To force the decoder to be a linear function of latent codes."
+        ],
+        answer: 1,
+        explanation: "Directly sampling z ~ q_θ(z|x) prevents gradient propagation because sampling has no analytical derivative. Writing z as a deterministic function of parameters conditioned on external random variable ε allows computing ∂z/∂μ and ∂z/∂σ via standard chain rule."
+      },
+      {
+        id: 53,
+        topic: "Generative Models",
+        question: "What two terms compose the Evidence Lower Bound (ELBO) maximized in VAE training?",
+        options: [
+          "Reconstruction Log-Likelihood E_{q_φ(z|x)}[log p_θ(x|z)] minus the KL Divergence D_KL(q_φ(z|x) || p(z)).",
+          "Wasserstein Distance minus Discriminator Cross-Entropy.",
+          "Empirical Variance plus Fisher Information.",
+          "Entropy of the prior minus Mutual Information of the latents."
+        ],
+        answer: 0,
+        explanation: "By Jensen's inequality: log p(x) ≥ E_{q_φ(z|x)}[log p_θ(x|z)] - D_KL(q_φ(z|x) || p(z)). The first term rewards accurate data reconstruction; the second acts as a regularizer pulling the posterior distribution toward the standard Gaussian prior p(z) = N(0, I)."
+      },
+      {
+        id: 54,
+        topic: "Generative Models",
+        question: "In Denoising Diffusion Probabilistic Models (DDPM, Ho et al.), what is the neural network trained to predict at timestep t?",
+        options: [
+          "The clean, completely noise-free image x_0 directly.",
+          "The random Gaussian noise vector ε that was added to the clean image x_0 to produce the noisy latent x_t.",
+          "The total number of timesteps remaining in the reverse trajectory.",
+          "The scalar log-likelihood of the marginal data distribution."
+        ],
+        answer: 1,
+        explanation: "Ho et al. reparameterized the variational diffusion objective into a mean-squared error loss: L_simple = E_{x_0, ε, t} [ ||ε - ε_θ(x_t, t)||^2 ]. Predicting the added Gaussian noise ε stabilizes training compared to predicting x_0 directly."
+      },
+      {
+        id: 55,
+        topic: "Generative Models",
+        question: "How does Denoising Diffusion Implicit Models (DDIM, Song et al.) accelerate generation compared to DDPM?",
+        options: [
+          "DDIM trains a separate discriminator network to bypass diffusion steps.",
+          "DDIM generalizes DDPM to non-Markovian forward processes that share the exact same marginals, enabling deterministic sampling trajectories that skip steps and require only 20-50 steps instead of 1000.",
+          "DDIM runs the reverse diffusion process in the Fourier frequency domain.",
+          "DDIM replaces the U-Net architecture with a single linear projection."
+        ],
+        answer: 1,
+        explanation: "Song et al. (2020) demonstrated that the forward process does not need to be Markovian to yield identical marginal Gaussian distributions q(x_t|x_0). Setting the reverse stochasticity σ_t = 0 makes the reverse process a deterministic ODE that can step through timesteps."
+      },
+      {
+        id: 56,
+        topic: "Generative Models",
+        question: "What does the Score Function represent in score-based generative modeling (Song & Ermon, Hyvärinen)?",
+        options: [
+          "The scalar reward output by a reinforcement learning reward model.",
+          "The gradient of the log probability density with respect to the data vector: ∇_x log p(x).",
+          "The classification accuracy of the discriminator.",
+          "The determinant of the Jacobian transformation."
+        ],
+        answer: 1,
+        explanation: "The score function is ∇_x log p(x). Crucially, if p(x) = p̃(x) / Z where Z is an intractable normalizing partition function, ∇_x log p(x) = ∇_x log p̃(x) - ∇_x log Z = ∇_x log p̃(x). The normalizing constant drops out entirely, avoiding tractability limits."
+      },
+      {
+        id: 57,
+        topic: "Generative Models",
+        question: "In Generative Adversarial Networks (GANs), if the discriminator is trained to global optimality at every step, what divergence is minimized between p_data and p_g?",
+        options: [
+          "Kullback-Leibler divergence D_KL(p_data || p_g)",
+          "Jensen-Shannon Divergence (JSD): 2 · D_JS(p_data || p_g) - 2 log 2",
+          "Wasserstein-1 Earth Mover's Distance",
+          "Total Variation Distance"
+        ],
+        answer: 1,
+        explanation: "Goodfellow et al. (2014) proved that substituting the optimal discriminator D*(x) = p_data(x) / (p_data(x) + p_g(x)) into the minimax game yields C(G) = -log 4 + 2 D_JS(p_data || p_g), establishing the game minimizes JSD."
+      },
+      {
+        id: 58,
+        topic: "Generative Models",
+        question: "Why does the original minimax GAN objective suffer from vanishing gradients when the discriminator becomes too proficient early in training?",
+        options: [
+          "Because the generator weights collapse to zero.",
+          "When D is confident, D(G(z)) → 0. In the term log(1 - D(G(z))), the derivative saturates and approaches 0 as D(G(z)) → 0, starving the generator of training gradients.",
+          "Because cross-entropy is non-differentiable near zero.",
+          "Because the generator must invert the discriminator's Hessian."
+        ],
+        answer: 1,
+        explanation: "When G is weak, D easily detects fakes: D(G(z)) ≈ 0. The function log(1 - D(G(z))) has a slope near zero when evaluated near 0. To fix this, Goodfellow proposed maximizing log(D(G(z))) (the non-saturating heuristic), which provides strong gradients early on."
+      },
+      {
+        id: 59,
+        topic: "Generative Models",
+        question: "What mathematical property gives Wasserstein GAN (WGAN) superior optimization stability over JSD-based GANs?",
+        options: [
+          "Wasserstein distance is computed via discrete Fourier transforms.",
+          "The Earth Mover's (Wasserstein-1) distance is continuous and differentiable almost everywhere, providing smooth, informative gradients even when the supports of p_data and p_g lie on low-dimensional disjoint manifolds.",
+          "WGAN restricts the discriminator to predict binary class probabilities.",
+          "WGAN guarantees that the generator converges in exactly one epoch."
+        ],
+        answer: 1,
+        explanation: "In high-dimensional space, distributions lie on thin manifolds with disjoint supports almost everywhere. JSD is constant (log 2) with zero gradients. Wasserstein distance measures transport distance, providing non-vanishing gradients that reflect spatial distance."
+      },
+      {
+        id: 60,
+        topic: "Generative Models",
+        question: "In Normalizing Flows (e.g., RealNVP), why must transformations f: R^D → R^D be restricted to bijective maps with triangular Jacobian matrices?",
+        options: [
+          "To enforce rotational invariance on latent representations.",
+          "To calculate exact log-likelihood via the change-of-variables formula: the determinant of a triangular Jacobian is simply the product of its diagonal elements, computed in O(D) instead of O(D^3) time.",
+          "Because non-triangular matrices cannot be stored on modern GPUs.",
+          "To guarantee that the latent distribution is uniform."
+        ],
+        answer: 1,
+        explanation: "Evaluating exact log p(x) = log p(z) + log |det J_f| requires computing matrix determinants. A general D×D matrix determinant costs O(D^3) (intractable for images with D=10^6). Triangular Jacobians reduce determinant computation to the product of diagonal elements in O(D)."
+      },
+      {
+        id: 61,
+        topic: "Generative Models",
+        question: "How does Classifier-Free Guidance (CFG) control sample quality versus diversity during conditional diffusion generation?",
+        options: [
+          "By running an external image classifier after sampling and discarding low-confidence images.",
+          "By training a single model on both conditioned and unconditioned inputs (dropping conditions randomly), and extrapolating noise predictions away from the unconditioned score: ε̃ = ε_uncond + s · (ε_cond - ε_uncond).",
+          "By setting the diffusion variance schedule to zero.",
+          "By increasing the temperature of the final softmax layer."
+        ],
+        answer: 1,
+        explanation: "Ho & Salimans (2021) showed that setting guidance scale s > 1 pushes predictions along the vector difference between conditioned and unconditional scores. This trades diversity for alignment to the prompt, avoiding the need to train a noisy external classifier."
+      },
+      {
+        id: 62,
+        topic: "Generative Models",
+        question: "What is Posterior Collapse in Variational Autoencoders?",
+        options: [
+          "When the decoder parameters diverge to infinity during backpropagation.",
+          "When the variational posterior q_φ(z|x) ignores the input x and collapses completely to the uninformative prior p(z) (D_KL → 0), causing an expressive decoder to act as an independent language model.",
+          "When all generated samples are identical white noise.",
+          "When the latent dimension is chosen to be larger than the input dimension."
+        ],
+        answer: 1,
+        explanation: "When the decoder is expressive (like PixelCNN or autoregressive transformers), the model can minimize reconstruction error while avoiding the KL penalty entirely by setting q(z|x) = p(z). The latent variable z is ignored, failing to learn meaningful representations."
+      },
+      {
+        id: 63,
+        topic: "Generative Models",
+        question: "In the Expectation-Maximization (EM) algorithm for Gaussian Mixture Models, what is analytically updated in the M-step?",
+        options: [
+          "The latent cluster responsibilities γ_{ik} for each data point.",
+          "The model parameters (cluster means μ_k, covariance matrices Σ_k, and mixing proportions π_k) by maximizing the expected complete-data log-likelihood weighted by responsibilities.",
+          "The number of mixture components K using the Bayesian Information Criterion.",
+          "The step size for stochastic gradient descent."
+        ],
+        answer: 1,
+        explanation: "The E-step computes the posterior expectations (responsibilities) γ_{ik} = P(Z_i = k | x_i, θ). The M-step uses these fixed responsibility weights to solve closed-form weighted maximum likelihood estimates for μ_k, Σ_k, and π_k."
+      },
+      {
+        id: 64,
+        topic: "Generative Models",
+        question: "What metric does the Fréchet Inception Distance (FID) compute to evaluate generative image synthesis quality?",
+        options: [
+          "The pixel-wise L2 difference between real and generated images.",
+          "The 2-Wasserstein distance between two multivariate Gaussians fitted to deep feature activations extracted from an Inception-v3 pool3 layer for real versus generated images.",
+          "The accuracy of an Inception network trained to distinguish real from fake images.",
+          "The cosine distance between CLIP text and image embeddings."
+        ],
+        answer: 1,
+        explanation: "FID calculates d^2 = ||μ_r - μ_g||^2 + Tr(Σ_r + Σ_g - 2(Σ_r Σ_g)^{1/2}). It measures the distance between the mean vectors and covariance matrices of features extracted from real and synthetic datasets, correlating well with human perceptual judgments."
+      },
+      {
+        id: 65,
+        topic: "Generative Models",
+        question: "Why is Maximum Likelihood Estimation (MLE) asymptotically efficient under standard regularity conditions according to the Cramér-Rao bound?",
+        options: [
+          "Because MLE achieves zero variance on finite datasets.",
+          "Because as sample size n → ∞, the variance of the MLE estimator attains the Cramér-Rao Lower Bound 1 / I_n(θ) (the inverse of Fisher Information).",
+          "Because MLE does not require computing likelihood derivatives.",
+          "Because MLE always produces unbiased estimators for small sample sizes."
+        ],
+        answer: 1,
+        explanation: "The Cramér-Rao theorem bounds the minimum variance of any unbiased estimator by the inverse of Fisher Information. Asymptotically (as n → ∞), the MLE estimator is normally distributed with variance converging to this lower bound."
+      },
+      {
+        id: 66,
+        topic: "Generative Models",
+        question: "In Langevin Dynamics sampling, what role does the injected Gaussian noise term play in exploring the energy landscape?",
+        options: [
+          "It forces the chain to terminate after 100 steps.",
+          "It provides stochastic Brownian perturbation that prevents the trajectory from becoming trapped in poor local modes, allowing the chain to sample from the true continuous Boltzmann distribution p(x) ∝ exp(-E(x)).",
+          "It normalizes the energy function to have zero mean.",
+          "It computes the Hessian condition number dynamically."
+        ],
+        answer: 1,
+        explanation: "Langevin dynamics updates x_{k+1} = x_k - η ∇E(x_k) + √(2η) ε_k. Without the noise term √(2η) ε_k, the update is gradient descent, which falls into the nearest local minimum. The noise term allows escaping modes to explore the probability density."
+      },
+      {
+        id: 67,
+        topic: "Generative Models",
+        question: "What distinguishes Autoregressive Models (e.g., PixelCNN, GPT) from VAEs and GANs in probability density modeling?",
+        options: [
+          "Autoregressive models cannot generate diverse samples.",
+          "Autoregressive models factorize the joint distribution via the probability chain rule p(x) = ∏ p(x_i | x_{<i}), providing tractable, exact likelihood evaluations without lower-bound approximations or adversarial minimax games.",
+          "Autoregressive models generate all output tokens or pixels in a single parallel step.",
+          "Autoregressive models are non-differentiable."
+        ],
+        answer: 1,
+        explanation: "VAEs optimize a lower bound (ELBO) and GANs bypass explicit likelihoods entirely. Autoregressive models use the chain rule of probability to calculate exact log p(x) = ∑ log p(x_i | x_{<i}), enabling principled maximum-likelihood training."
+      },
+      {
+        id: 68,
+        topic: "Generative Models",
+        question: "What does Mode Collapse in GANs describe, and what structural dynamic causes it?",
+        options: [
+          "The sudden loss of GPU memory allocation during training.",
+          "When the generator discovers a small subset of realistic samples that fool the discriminator, and continually outputs only those modes while ignoring the rest of the target distribution's diversity.",
+          "When the discriminator achieves zero loss on the first epoch.",
+          "When latent vectors collapse onto the origin z = 0."
+        ],
+        answer: 1,
+        explanation: "Minimax optimization min_G max_D is not commutative. If G updates against a fixed D, it can collapse all latent points z into a single mode that D currently rates as realistic. In the next step, D penalizes that mode, and G cycles to another mode without learning diversity."
+      },
+
+      /* =========================================================================
+         DOMAIN 5: REPRESENTATION & CONTRASTIVE LEARNING (17 Questions)
+         ========================================================================= */
+      {
+        id: 69,
+        topic: "Representation Learning",
+        question: "In self-supervised contrastive learning (SimCLR, Chen et al.), what prevents representation collapse when negative samples are contrasted in InfoNCE loss?",
+        options: [
+          "An explicit orthogonality constraint enforced via Singular Value Decomposition.",
+          "The denominator of InfoNCE contains negative pairs that exert a repulsive force in embedding space, pushing dissimilar representations apart while pulling augmented views together.",
+          "A stop-gradient operator applied to the query encoder.",
+          "A fixed Gaussian prior applied to the projection head."
+        ],
+        answer: 1,
+        explanation: "InfoNCE loss L = - log( exp(sim(q, k+) / τ) / [exp(sim(q, k+) / τ) + ∑ exp(sim(q, k-) / τ)] ). The denominator penalizes similarity with negative samples k-, preventing the network from collapsing into a trivial constant vector solution."
+      },
+      {
+        id: 70,
+        topic: "Representation Learning",
+        question: "How does the InfoNCE loss function relate mathematically to Mutual Information I(X; Y) between views?",
+        options: [
+          "It provides an exact closed-form evaluation of mutual information.",
+          "Maximizing the InfoNCE objective maximizes a rigorous lower bound on the mutual information: I(X; Y) ≥ log(K) - L_InfoNCE, where K is the number of negative samples.",
+          "It minimizes the mutual information between augmented views.",
+          "InfoNCE is completely independent of mutual information theory."
+        ],
+        answer: 1,
+        explanation: "Oord et al. (CPC, 2018) proved that InfoNCE is a variational lower bound on mutual information: I(X; Y) ≥ log(K) - L_InfoNCE. Maximizing the InfoNCE score increases the shared information content between different augmentations of the same sample."
+      },
+      {
+        id: 71,
+        topic: "Representation Learning",
+        question: "What architectural mechanism allows Bootstrap Your Own Latent (BYOL, Grill et al.) to prevent collapse without using any negative pairs?",
+        options: [
+          "An asymmetric architecture combining an online network (with an additional MLP predictor) and a target network updated via Exponential Moving Average (EMA), combined with stop-gradient.",
+          "Enforcing a strict L1 sparsity penalty across all hidden features.",
+          "Reconstructing raw pixels using a masked autoencoder.",
+          "Quantizing intermediate representations into discrete codebook entries."
+        ],
+        answer: 0,
+        explanation: "BYOL demonstrates that negative pairs are not mandatory. An online network predicts the representation of a target network. Because the target network is updated via slow EMA and gradients are not backpropagated into it (stop-gradient), representations cannot collapse to constants."
+      },
+      {
+        id: 72,
+        topic: "Representation Learning",
+        question: "In VICReg (Variance-Invariance-Covariance Regularization), what explicit role does the Variance loss term fulfill?",
+        options: [
+          "It penalizes variance between positive pair embeddings.",
+          "It acts as a hinge loss that forces the standard deviation of each embedding feature across the batch to remain above a threshold γ, preventing representation collapse to a constant vector.",
+          "It drives cross-correlation between different feature dimensions to zero.",
+          "It computes the empirical variance of the attention heads."
+        ],
+        answer: 1,
+        explanation: "Bardes et al. (2021) decompose self-supervised regularization into three terms: Invariance (pulling positive pairs together), Variance (keeping feature standard deviation ≥ 1 across the batch to prevent constant collapse), and Covariance (decorrelating dimensions)."
+      },
+      {
+        id: 73,
+        topic: "Representation Learning",
+        question: "Why does the CLIP (Contrastive Language-Image Pre-training) architecture use a symmetric cross-entropy loss over a batch of N (image, text) pairs?",
+        options: [
+          "To force image embeddings to have zero variance.",
+          "It maximizes the cosine similarities of the N correct (image_i, text_i) pairs while minimizing the N^2 - N incorrect pairings across both image-to-text and text-to-image directions simultaneously.",
+          "To train an autoregressive image captioner without text tokens.",
+          "To enforce orthogonal weight matrices in both encoders."
+        ],
+        answer: 1,
+        explanation: "Radford et al. (2021) compute an N×N cosine similarity matrix between image and text embeddings. Symmetric cross-entropy treats rows as classification targets (which text matches this image?) and columns as targets (which image matches this text?)."
+      },
+      {
+        id: 74,
+        topic: "Representation Learning",
+        question: "What is the role of the non-linear Projection Head g(·) in SimCLR, and why is it discarded during downstream transfer evaluation?",
+        options: [
+          "It converts continuous embeddings into discrete tokens.",
+          "The projection head strips away task-specific augmentations (like color jitter or rotation); keeping features before the projection head retains richer semantics and geometric information for downstream tasks.",
+          "The projection head is discarded because its weights diverge during training.",
+          "It reduces feature dimensions down to 2 for visualization."
+        ],
+        answer: 1,
+        explanation: "Chen et al. showed that downstream linear probe performance is roughly 10% higher using representations h (before projection) than z = g(h). The projection head discards information (like color and orientation) to satisfy contrastive invariance."
+      },
+      {
+        id: 75,
+        topic: "Representation Learning",
+        question: "In Masked Autoencoders (MAE, He et al.), why does masking a high percentage (75-80%) of image patches yield superior visual representations?",
+        options: [
+          "Because images have high spatial redundancy; a low masking ratio allows the model to interpolate pixels from immediately adjacent neighbors without learning high-level visual concepts.",
+          "To reduce training FLOPs by 99%.",
+          "Because self-attention cannot process more than 20 patches at a time.",
+          "To prevent convolutional layers from overfitting."
+        ],
+        answer: 0,
+        explanation: "Unlike language where words have dense semantics, pixels in images are spatially redundant. With light masking (e.g. 15%), an autoencoder can copy nearby pixel values. High masking (75%) removes local cues, forcing the encoder to learn holistic semantic structure."
+      },
+      {
+        id: 76,
+        topic: "Representation Learning",
+        question: "What is Dimensional Collapse in self-supervised representation learning?",
+        options: [
+          "When the feature dimension is reduced to zero by PCA.",
+          "When representations span only a tiny lower-dimensional linear subspace of the available embedding space, leaving most orthogonal directions unused.",
+          "When all weights in the final layer drop to zero.",
+          "When the batch size is smaller than the hidden dimension."
+        ],
+        answer: 1,
+        explanation: "Even if representations do not collapse to a single point (complete collapse), they can suffer from dimensional collapse where embedding vectors span a low-rank subspace (singular values decay rapidly), reducing representation capacity."
+      },
+      {
+        id: 77,
+        topic: "Representation Learning",
+        question: "In the Triplet Loss objective L = max(0, ||f(a) - f(p)||^2 - ||f(a) - f(n)||^2 + α), what is the function of the margin hyperparameter α?",
+        options: [
+          "It forces negative samples to be at least α units further from the anchor than positive samples, preventing the network from learning trivial equidistant configurations.",
+          "It caps the maximum gradient norm during backpropagation.",
+          "It balances the learning rate between anchor and positive branches.",
+          "It dictates the number of negative samples selected per batch."
+        ],
+        answer: 0,
+        explanation: "Without a margin (α = 0), setting f(x) = constant yields zero loss everywhere (collapse). The margin α requires ||f(a) - f(n)||^2 ≥ ||f(a) - f(p)||^2 + α, forcing negative pairs to remain separated by a buffer zone."
+      },
+      {
+        id: 78,
+        topic: "Representation Learning",
+        question: "Why is 'Hard Negative Mining' critical when training metric learning systems with triplet or contrastive losses?",
+        options: [
+          "Because random negatives are quickly separated with distance exceeding the margin α, producing zero loss and zero gradients for most triplets and stalling learning.",
+          "Because hard negatives prevent floating-point underflow.",
+          "Because easy negatives cause the loss function to become non-convex.",
+          "Because hard negative mining eliminates the need for positive pairs."
+        ],
+        answer: 0,
+        explanation: "As training progresses, the majority of random negative pairs satisfy the margin constraint (loss = 0), yielding zero gradient. Mining 'hard' negatives (violating the margin) or 'semi-hard' negatives keeps the loss active and gradients informative."
+      },
+      {
+        id: 79,
+        topic: "Representation Learning",
+        question: "What is Barlow Twins' objective function based on, and how does it prevent collapse?",
+        options: [
+          "It computes the Wasserstein distance between image histograms.",
+          "It evaluates the cross-correlation matrix between outputs of two identical sub-networks and drives it toward the identity matrix: diagonal elements are pulled to 1 (invariance) while off-diagonal elements are driven to 0 (redundancy reduction).",
+          "It clusters embeddings via online k-means at each step.",
+          "It uses an adversarial discriminator to match latent distributions to uniform noise."
+        ],
+        answer: 1,
+        explanation: "Zbontar et al. (2021) apply principles from neurobiology (Barlow's hypothesis). Driving off-diagonal cross-correlation terms to 0 decorrelates individual vector components, preventing representations from collapsing into redundant or constant dimensions."
+      },
+      {
+        id: 80,
+        topic: "Representation Learning",
+        question: "In DINO (Caron et al.), how does self-distillation with vision transformers learn semantic segmentations without labels?",
+        options: [
+          "By applying cross-entropy between a student network and a momentum teacher with centering and sharpening operations, where centering prevents collapse to a uniform mode and sharpening avoids uniform collapse.",
+          "By running pixel-level clustering on input RGB channels.",
+          "By utilizing supervised bounding box regression losses.",
+          "By training on synthetic 3D rendering data."
+        ],
+        answer: 0,
+        explanation: "DINO passes different augmented views to a student and teacher network. The teacher is updated via EMA. Two counterbalancing operations avoid collapse: centering adds a bias vector to the teacher outputs (preventing one dimension from dominating), while sharpening divides logits by a low temperature τ."
+      },
+      {
+        id: 81,
+        topic: "Representation Learning",
+        question: "What does the temperature parameter τ control in the Softmax formulation of InfoNCE loss?",
+        options: [
+          "The precision of floating point matrix operations.",
+          "It scales the hardness-awareness of negative samples: low τ values penalize the hardest negatives (those closest to the anchor) aggressively, while high τ treats all negatives more uniformly.",
+          "The learning rate decay schedule.",
+          "The number of positive pairs sampled per anchor."
+        ],
+        answer: 1,
+        explanation: "Wang & Liu (2021) showed that dividing logits by τ acts as a hardness-aware regularizer. Small τ accentuates differences between cosine similarities, concentrating gradient penalties on the hardest negative samples."
+      },
+      {
+        id: 82,
+        topic: "Representation Learning",
+        question: "What is Alignment and Uniformity on the hypersphere in contrastive learning (Wang & Isola)?",
+        options: [
+          "Alignment measures weight decay; Uniformity measures learning rate schedules.",
+          "Alignment requires positive pairs to map to nearby features; Uniformity requires feature vectors to be uniformly distributed over the unit hypersphere, preserving maximal information entropy.",
+          "Alignment measures batch size; Uniformity measures model parameter distribution.",
+          "Alignment forces all weights to be non-negative; Uniformity caps activations."
+        ],
+        answer: 1,
+        explanation: "Wang & Isola (2020) demonstrated that contrastive learning optimizes two properties: Alignment (E[||f(x) - f(x^+)||^2] → 0) and Uniformity (log E[exp(-2||f(x) - f(y)||^2)] → 0), which maximizes the entropy of the representation space."
+      },
+      {
+        id: 83,
+        topic: "Representation Learning",
+        question: "Why do contrastive learning algorithms normalize embedding vectors to the unit hypersphere (||z||_2 = 1)?",
+        options: [
+          "To allow quantization to INT8.",
+          "To prevent the network from trivially optimizing contrastive losses by growing vector magnitudes arbitrarily, decoupling cosine directional similarity from feature scale.",
+          "To enforce non-negativity across all coordinates.",
+          "To eliminate the need for bias vectors in linear layers."
+        ],
+        answer: 1,
+        explanation: "Without L2 normalization, a network can minimize contrastive loss by scaling up positive pair magnitudes to inflate dot products toward infinity. Restricting features to S^{d-1} forces the optimizer to align angular directions."
+      },
+      {
+        id: 84,
+        topic: "Representation Learning",
+        question: "In Vector Quantized VAEs (VQ-VAE, van den Oord et al.), how are gradients propagated through the non-differentiable discrete codebook lookup argmin_i ||z_e(x) - e_i||?",
+        options: [
+          "Using Gumbel-Softmax relaxation.",
+          "Using the Straight-Through Estimator, which copies the gradient from the decoder input z_q(x) directly to the encoder output z_e(x) during backpropagation.",
+          "Using finite difference approximations.",
+          "By discarding the decoder gradient entirely."
+        ],
+        answer: 1,
+        explanation: "Quantization is non-differentiable (zero derivative). The straight-through estimator sets z_q(x) = z_e(x) + sg[z_q(x) - z_e(x)] where sg is the stop-gradient operator. In the backward pass, gradients flow unaltered from z_q directly to z_e."
+      },
+      {
+        id: 85,
+        topic: "Representation Learning",
+        question: "What is Linear Probing and why is it preferred over full fine-tuning when evaluating self-supervised representations?",
+        options: [
+          "Linear probing trains an SVM on raw pixels to create baseline scores.",
+          "Linear probing freezes the pre-trained feature extractor and trains only a single linear classification layer on top, directly measuring the linear separability and quality of the extracted features without altering them.",
+          "Linear probing optimizes the learning rate using grid search.",
+          "Linear probing prunes all weights smaller than a threshold."
+        ],
+        answer: 1,
+        explanation: "Full fine-tuning updates all backbone weights, obscuring whether downstream performance stems from pre-trained representations or end-to-end gradient updates. Freezing the backbone and training a linear layer isolates representation quality."
+      },
+
+      /* =========================================================================
+         DOMAIN 6: REINFORCEMENT LEARNING & MODERN ALIGNMENT (17 Questions)
+         ========================================================================= */
+      {
+        id: 86,
+        topic: "RL & Alignment",
+        question: "What does the Policy Gradient Theorem (Sutton et al.) analytically establish for parameterizing a stochastic policy π_θ(a|s)?",
+        options: [
+          "∇_θ J(θ) = E_{π_θ} [ ∇_θ log π_θ(a|s) · Q^{π_θ}(s, a) ], eliminating the need to differentiate through unknown environmental transition dynamics P(s' | s, a).",
+          "Policy gradient updates require knowing the transition probability matrix P(s' | s, a).",
+          "Policy gradients are strictly zero at all deterministic states.",
+          "The expected return is convex with respect to policy parameters θ."
+        ],
+        answer: 0,
+        explanation: "The theorem proves that despite actions changing the distribution of downstream states, the gradient of the expected return ∇_θ J(θ) can be expressed without taking derivatives of the environment dynamics P(s'|s,a), enabling model-free policy optimization."
+      },
+      {
+        id: 87,
+        topic: "RL & Alignment",
+        question: "Why does the REINFORCE algorithm suffer from high variance, and how does subtracting a state-dependent baseline b(s) mitigate this?",
+        options: [
+          "Because episode rewards can be negative; subtracting a baseline forces all rewards to be positive.",
+          "Sampled trajectory returns G_t have high stochastic variance; subtracting a baseline b(s) (such as a value function V(s)) reduces variance without introducing bias, because E[∇_θ log π_θ(a|s) · b(s)] = 0.",
+          "Subtracting a baseline converts the policy into a deterministic actor-critic.",
+          "The baseline eliminates the need for discount factor γ."
+        ],
+        answer: 1,
+        explanation: "Because ∑_a ∇_θ π_θ(a|s) = ∇_θ ∑_a π_θ(a|s) = ∇_θ 1 = 0, multiplying ∇ log π by any baseline b(s) that does not depend on action a has zero expectation. This leaves the gradient unbiased while reducing variance."
+      },
+      {
+        id: 88,
+        topic: "RL & Alignment",
+        question: "In Proximal Policy Optimization (PPO), how does the Clipped Surrogate Objective prevent destructive policy updates?",
+        options: [
+          "By clipping the policy parameter weights θ within [-1, 1].",
+          "By clipping the probability ratio r_t(θ) = π_θ(a_t|s_t) / π_{θ_old}(a_t|s_t) to [1 - ε, 1 + ε], removing the incentive to move the ratio outside this interval when the advantage is positive.",
+          "By freezing the value function during policy updates.",
+          "By solving a second-order natural gradient update at each step."
+        ],
+        answer: 1,
+        explanation: "PPO optimizes L_CLIP = E[ min(r_t(θ) Â_t, clip(r_t(θ), 1-ε, 1+ε) Â_t) ]. If an action has positive advantage, the ratio is bounded at 1+ε; if negative, bounded at 1-ε. This penalizes excessively large policy updates without needing expensive second-order constraints (like TRPO)."
+      },
+      {
+        id: 89,
+        topic: "RL & Alignment",
+        question: "In Direct Preference Optimization (DPO, Rafailov et al.), how is the language model aligned to human preferences without training a separate reward model or running RL loops?",
+        options: [
+          "DPO uses supervised fine-tuning exclusively on accepted responses.",
+          "By analytically reparameterizing the reward r(x, y) = β log(π_θ(y|x) / π_ref(y|x)) under the Bradley-Terry preference model, enabling exact closed-form policy optimization via binary cross-entropy on preferred vs. dispreferred pairs.",
+          "DPO uses Q-learning on token embedding activations.",
+          "DPO trains an adversarial discriminator to detect generated completions."
+        ],
+        answer: 1,
+        explanation: "Under the Bradley-Terry model P(y_w ≻ y_l) = σ(r(x, y_w) - r(x, y_l)), the optimal policy π* relates directly to the reward. DPO substitutes this relationship into the objective, optimizing the policy directly on preference pairs without RL instability."
+      },
+      {
+        id: 90,
+        topic: "RL & Alignment",
+        question: "Why is a KL-divergence penalty term β D_KL(π_θ(y|x) || π_ref(y|x)) included in the RLHF objective during PPO fine-tuning?",
+        options: [
+          "To speed up token generation during inference.",
+          "To prevent 'reward hacking' (policy drift), ensuring the language model does not drift into gibberish or adversarial strings that exploit weaknesses in the reward model.",
+          "To force the model to generate shorter responses.",
+          "To ensure the student network matches the teacher's weights."
+        ],
+        answer: 1,
+        explanation: "The reward model is an imperfect proxy. Without a KL anchor to the initial supervised fine-tuned reference model π_ref, RL optimization exploits blind spots in the reward model, producing high reward scores on nonsensical or repetitive text."
+      },
+      {
+        id: 91,
+        topic: "RL & Alignment",
+        question: "What is the Generalized Advantage Estimator (GAE, Schulman et al.) parameter λ used for?",
+        options: [
+          "To balance the tradeoff between bias and variance in advantage estimation, where λ = 0 yields TD(0) with low variance but high bias, and λ = 1 yields Monte Carlo with zero bias but high variance.",
+          "To clip gradients in the policy network.",
+          "To control the temperature of action sampling.",
+          "To set the discount factor for downstream episodic returns."
+        ],
+        answer: 0,
+        explanation: "GAE computes Â_t^{GAE} = ∑_{l=0}^∞ (γλ)^l δ_{t+l}^V. The parameter λ interpolates between the high-bias/low-variance one-step temporal difference error (λ = 0) and the unbiased/high-variance empirical Monte Carlo return (λ = 1)."
+      },
+      {
+        id: 92,
+        topic: "RL & Alignment",
+        question: "Why is Q-learning classified as an 'Off-Policy' algorithm, whereas SARSA is classified as 'On-Policy'?",
+        options: [
+          "Q-learning updates state-action values using the hypothetical greedy target action max_{a'} Q(s', a') regardless of which action was actually chosen by the behavior policy; SARSA updates using the actual action a' taken by the current policy.",
+          "Q-learning requires deep neural networks; SARSA can only be implemented in tabular form.",
+          "SARSA does not use temporal difference learning.",
+          "Q-learning updates parameters only at episode termination."
+        ],
+        answer: 0,
+        explanation: "The target for Q-learning is R + γ max_{a'} Q(S_{t+1}, a') (evaluating the greedy policy while exploring via ε-greedy). SARSA's target is R + γ Q(S_{t+1}, A_{t+1}) (evaluating the actual policy generating the trajectory)."
+      },
+      {
+        id: 93,
+        topic: "RL & Alignment",
+        question: "What causes Overestimation Bias in Deep Q-Networks (DQN), and how does Double DQN (Van Hasselt et al.) resolve it?",
+        options: [
+          "The max operator over noisy Q-value estimates E[max_a Q(s', a')] ≥ max_a E[Q(s', a')] introduces systematic positive bias; Double DQN decouples action selection (using online network θ) from action evaluation (using target network θ^-).",
+          "Experience replay buffers store duplicate samples; Double DQN removes duplicates.",
+          "Overestimation stems from high learning rates; Double DQN halves the learning rate.",
+          "Double DQN uses two separate replay buffers."
+        ],
+        answer: 0,
+        explanation: "Due to Jensen's inequality and noise, the max operator overestimates Q-values. Double DQN computes the target as R + γ Q(s', argmax_a Q(s', a; θ); θ^-), using the online network to select the best action and the target network to evaluate its value."
+      },
+      {
+        id: 94,
+        topic: "RL & Alignment",
+        question: "In Deep Q-Learning, what is the role of the Experience Replay buffer?",
+        options: [
+          "It breaks temporal correlations between consecutive sequential transitions and provides identically distributed batches to stabilize neural network gradient updates.",
+          "It forces the agent to visit all possible states in the MDP.",
+          "It stores policy gradients for second-order optimization.",
+          "It eliminates the need for discount factor γ."
+        ],
+        answer: 0,
+        explanation: "Sequential transitions in RL are strongly correlated (s_{t+1} depends on s_t), violating the i.i.d. assumption of gradient descent. Uniformly sampling transitions from a large replay buffer decorrelates updates and stabilizes training."
+      },
+      {
+        id: 95,
+        topic: "RL & Alignment",
+        question: "What is the Deadly Triad in reinforcement learning (Sutton & Barto)?",
+        options: [
+          "Actor-Critic, Policy Gradient, and Value Iteration.",
+          "The dangerous instability and risk of divergence that arises whenever an algorithm combines: Function Approximation, Bootstrapping (updating estimates from other estimates), and Off-Policy learning.",
+          "High learning rates, small batch sizes, and sparse rewards.",
+          "Discount factor γ = 1, continuous action spaces, and stochastic environments."
+        ],
+        answer: 1,
+        explanation: "When function approximation (e.g. deep nets), bootstrapping (e.g. Q-learning, TD), and off-policy training coincide, the Bellman operator is no longer a contraction mapping in the parameter space, and updates can diverge to infinity."
+      },
+      {
+        id: 96,
+        topic: "RL & Alignment",
+        question: "What is the exploration mechanism utilized in Soft Actor-Critic (SAC, Haarnoja et al.)?",
+        options: [
+          "ε-greedy random action selection.",
+          "Maximum Entropy RL, which augments the expected reward objective with an entropy term H(π(·|s)) to encourage the policy to act as randomly as possible while still completing the task.",
+          "Upper Confidence Bound exploration bonuses based on state visitation counts.",
+          "Injecting Gaussian noise into the network weights at each timestep."
+        ],
+        answer: 1,
+        explanation: "SAC maximizes J(θ) = ∑ E [ R(s_t, a_t) + α H(π(·|s_t)) ]. Maximizing entropy prevents premature policy collapse to deterministic local optima, encourages exploration of diverse trajectories, and accelerates downstream fine-tuning."
+      },
+      {
+        id: 97,
+        topic: "RL & Alignment",
+        question: "What does the Bradley-Terry preference model formulate in preference learning and reward modeling?",
+        options: [
+          "The probability that prompt x belongs to domain y.",
+          "The probability that completion y_1 is preferred over y_2 given prompt x as a sigmoid of their reward difference: P(y_1 ≻ y_2 | x) = σ(r(x, y_1) - r(x, y_2)).",
+          "The variance of the advantage function across mini-batches.",
+          "The discount factor schedule for non-terminating environments."
+        ],
+        answer: 1,
+        explanation: "The Bradley-Terry (1952) model parameterizes pairwise comparison probabilities using latent scalar scores. In RLHF, training a reward model r_ψ on human preference datasets minimizes cross-entropy loss -log σ(r_ψ(x, y_w) - r_ψ(x, y_l))."
+      },
+      {
+        id: 98,
+        topic: "RL & Alignment",
+        question: "What is the Rejection Sampling (Best-of-N) alignment baseline for LLMs?",
+        options: [
+          "Discarding prompt inputs containing profanity.",
+          "Generating N completions from the policy for a given prompt, scoring each with a trained reward model, and selecting the completion with the highest score as the final output.",
+          "Rejecting gradient updates that exceed a norm threshold.",
+          "Pruning the bottom 50% of model weights based on magnitude."
+        ],
+        answer: 1,
+        explanation: "Best-of-N is a non-training inference-time alignment technique. Generating N candidate responses and returning argmax_i r(x, y_i) provides a strong benchmark that competes with RL fine-tuning at the cost of N-fold generation latency."
+      },
+      {
+        id: 99,
+        topic: "RL & Alignment",
+        question: "In tabular Markov Decision Processes, what is the core difference between Value Iteration and Policy Iteration?",
+        options: [
+          "Value iteration computes gradients; policy iteration does not.",
+          "Policy iteration completely evaluates the value function V^π of the current policy (solving linear equations until convergence) before improving it; Value iteration applies a single Bellman optimality backup step per sweep.",
+          "Value iteration is model-free; policy iteration is model-based.",
+          "Policy iteration can only be used on deterministic MDPs."
+        ],
+        answer: 1,
+        explanation: "Policy iteration alternates between exact Policy Evaluation (running until V^π converges) and Policy Improvement. Value iteration truncates evaluation to a single Bellman optimality sweep V_{k+1}(s) = max_a ∑ P(s'|s,a)[R + γ V_k(s')], speeding up per-step iteration."
+      },
+      {
+        id: 100,
+        topic: "RL & Alignment",
+        question: "What is Reward Hacking (Specification Gaming) in reinforcement learning systems?",
+        options: [
+          "When an adversary alters the weights of the neural network during deployment.",
+          "When an agent exploits loopholes or edge cases in the defined reward function to achieve high numerical reward without achieving the designer's intended goal.",
+          "When the discount factor γ is set too close to 1.",
+          "When the value network overestimates the Q-values of unseen states."
+        ],
+        answer: 1,
+        explanation: "Goodhart's Law: 'When a measure becomes a target, it ceases to be a good measure.' Agents find unintended shortcuts (e.g. a boat racing agent running in infinite tight circles catching power-ups rather than finishing the race) that maximize score while failing the objective."
+      },
+      {
+        id: 101,
+        topic: "RL & Alignment",
+        question: "In Actor-Critic architectures, why is the Critic's output used to guide the Actor rather than using raw Monte Carlo trajectory returns?",
+        options: [
+          "The Critic eliminates the need for activation functions in the Actor network.",
+          "The Critic provides a low-variance baseline and bootstrap estimate of the expected future return from the current state, speeding up convergence compared to high-variance full-trajectory returns.",
+          "The Critic forces the Actor to output deterministic actions.",
+          "The Critic computes the exact analytical gradient of the environment transition dynamics."
+        ],
+        answer: 1,
+        explanation: "Monte Carlo returns G_t require summing rewards along an entire trajectory, compounding environment stochasticity. A learned Critic V_ψ(s) trades a small amount of approximation bias for dramatic reductions in gradient variance, enabling steady parameter updates."
+      },
+      {
+        id: 102,
+        topic: "RL & Alignment",
+        question: "What is Length Bias in RLHF and Direct Preference Optimization, and how is it mitigated?",
+        options: [
+          "The tendency of models to fail when prompts exceed 2048 tokens.",
+          "The tendency of reward models and preference datasets to assign higher rewards to longer completions regardless of factual substance; mitigated by length-normalized reward models or explicit length penalties.",
+          "The degradation of attention weights in long context windows.",
+          "The truncation of sentences during beam search decoding."
+        ],
+        answer: 1,
+        explanation: "Human evaluators frequently perceive longer, verbose responses as more helpful or authoritative, biasing preference data. Reward models learn this correlation, causing aligned LLMs to generate excessively wordy completions unless length penalties or normalized margins are applied."
+      }
+    ];
+
+    /* =========================================================================
+       APP ENGINE, OFFLINE SERVICE WORKER, & STATE MANAGEMENT
+       ========================================================================= */
+    const STORAGE_KEY = 'ml_onthego_graduate_pwa_v3';
+
+    let state = {
+      currentIndex: 0,
+      activeMode: 'all', // 'all' (unseen queue), 'drill', 'bookmarked', 'mistakes'
+      activeDomain: 'All',
+      userAnswers: {},   // { [qId]: selectedOptionIndex }
+      bookmarked: {},    // { [qId]: boolean }
+      mistakes: {},      // { [qId]: boolean }
+      completedQueue: {},// { [qId]: timestamp }
+      audioEnabled: true,
+      streak: 1,
+      lastDate: new Date().toDateString()
+    };
+
+    function loadState() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          state = { ...state, ...parsed };
+        }
+        if (!state.completedQueue) state.completedQueue = {};
+
+        // Streak check
+        const today = new Date().toDateString();
+        if (state.lastDate !== today) {
+          const yesterday = new Date(Date.now() - 86400000).toDateString();
+          if (state.lastDate === yesterday) {
+            state.streak = (state.streak || 1) + 1;
+          } else {
+            state.streak = 1;
+          }
+          state.lastDate = today;
+          saveState();
+        }
+        HapticAudio.enabled = state.audioEnabled !== false;
+      } catch (e) {
+        console.warn('Storage read failed', e);
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {
+        console.warn('Storage write failed', e);
+      }
+    }
+
+    // Active working pool
+    let activeList = [];
+
+    function filterQuestions() {
+      let list = [...QUESTIONS_DATA];
+
+      // Domain filter
+      if (state.activeDomain && state.activeDomain !== 'All') {
+        list = list.filter(q => q.topic === state.activeDomain);
+      }
+
+      // Mode filter
+      if (state.activeMode === 'all') {
+        // Unseen queue: exclude questions that have already been answered!
+        list = list.filter(q => state.userAnswers[q.id] === undefined);
+      } else if (state.activeMode === 'bookmarked') {
+        list = list.filter(q => !!state.bookmarked[q.id]);
+      } else if (state.activeMode === 'mistakes') {
+        list = list.filter(q => !!state.mistakes[q.id]);
+      } else if (state.activeMode === 'drill') {
+        // Drill mode includes all, but shuffled
+      }
+
+      activeList = list;
+      if (state.currentIndex >= activeList.length) {
+        state.currentIndex = Math.max(0, activeList.length - 1);
+      }
+      updateUI();
+    }
+
+    /* =========================================================================
+       DOM ELEMENTS
+       ========================================================================= */
+    const questionTextEl = document.getElementById('questionText');
+    const optionsContainerEl = document.getElementById('optionsContainer');
+    const explanationBoxEl = document.getElementById('explanationBox');
+    const explanationTextEl = document.getElementById('explanationText');
+    const correctBadgeEl = document.getElementById('correctBadge');
+    const questionIndexBadge = document.getElementById('questionIndexBadge');
+    const questionTopicBadge = document.getElementById('questionTopicBadge');
+    const bookmarkBtn = document.getElementById('bookmarkBtn');
+    const bookmarkIcon = document.getElementById('bookmarkIcon');
+    const progressBar = document.getElementById('progressBar');
+    const jumpIndicator = document.getElementById('jumpIndicator');
+    const statAnswered = document.getElementById('statAnswered');
+    const statAccuracy = document.getElementById('statAccuracy');
+    const statActiveDomain = document.getElementById('statActiveDomain');
+    const savedCountEl = document.getElementById('savedCount');
+    const mistakeCountEl = document.getElementById('mistakeCount');
+    const unseenCountEl = document.getElementById('unseenCount');
+    const streakCountEl = document.getElementById('streakCount');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const revealBtn = document.getElementById('revealBtn');
+    const audioToggleBtn = document.getElementById('audioToggleBtn');
+    const audioIcon = document.getElementById('audioIcon');
+    const pwaInstallBtn = document.getElementById('pwaInstallBtn');
+    const toastNotification = document.getElementById('toastNotification');
+    const toastMsg = document.getElementById('toastMsg');
+
+    function showToast(message) {
+      toastMsg.textContent = message;
+      toastNotification.classList.remove('hidden');
+      setTimeout(() => {
+        toastNotification.classList.add('hidden');
+      }, 2500);
+    }
+
+    /* =========================================================================
+       PWA INSTALLATION DETECTION & PROMPT
+       ========================================================================= */
+    let deferredInstallPrompt = null;
+
+    function isRunningStandalone() {
+      return (
+        window.matchMedia('(display-mode: standalone)').matches ||
+        window.navigator.standalone === true ||
+        document.referrer.includes('android-app://')
+      );
+    }
+
+    if (!isRunningStandalone()) {
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredInstallPrompt = e;
+        pwaInstallBtn.classList.remove('hidden');
+        pwaInstallBtn.classList.add('flex');
+      });
+
+      // Show button by default if on mobile/desktop browsers not yet in standalone
+      pwaInstallBtn.classList.remove('hidden');
+      pwaInstallBtn.classList.add('flex');
+    } else {
+      pwaInstallBtn.classList.add('hidden');
+    }
+
+    pwaInstallBtn.onclick = async () => {
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        const { outcome } = await deferredInstallPrompt.userChoice;
+        if (outcome === 'accepted') {
+          pwaInstallBtn.classList.add('hidden');
+        }
+        deferredInstallPrompt = null;
+      } else {
+        // Fallback instructions for iOS or desktop browsers where prompt isn't directly triggered
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const installModalText = document.getElementById('installModalText');
+        if (isIOS) {
+          installModalText.innerHTML = `To install <strong>ML on the Go</strong> on iOS:<br><br>1. Tap the Safari <strong>Share</strong> button at bottom.<br>2. Select <strong>'Add to Home Screen'</strong>.`;
+        } else {
+          installModalText.innerHTML = `To install <strong>ML on the Go</strong>:<br><br>Click your browser's menu (⋮ or ⋯) and select <strong>'Install App'</strong> or <strong>'Add to Home Screen'</strong>.`;
+        }
+        document.getElementById('installModal').classList.remove('hidden');
+      }
+    };
+
+    document.getElementById('closeInstallModalBtn').onclick = () => {
+      document.getElementById('installModal').classList.add('hidden');
+    };
+
+    /* =========================================================================
+       SHARE FUNCTIONALITY
+       ========================================================================= */
+    document.getElementById('shareAppBtn').onclick = async () => {
+      const shareData = {
+        title: 'ML on the Go',
+        text: 'Master graduate-level Machine Learning questions offline with ML on the Go!',
+        url: window.location.href
+      };
+
+      if (navigator.share) {
+        try {
+          await navigator.share(shareData);
+          return;
+        } catch (err) {
+          if (err.name !== 'AbortError') {
+            copyShareUrlFallback();
+          }
+        }
+      } else {
+        copyShareUrlFallback();
+      }
+    };
+
+    function copyShareUrlFallback() {
+      const url = window.location.href;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(() => {
+          showToast('Link copied to clipboard!');
+        }).catch(() => {
+          legacyCopy(url);
+        });
+      } else {
+        legacyCopy(url);
+      }
+    }
+
+    function legacyCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('Link copied to clipboard!');
+      } catch (err) {
+        showToast('Share URL: ' + window.location.href);
+      }
+      document.body.removeChild(ta);
+    }
+
+    /* =========================================================================
+       QUESTION RENDERER & UNSEEN COMPLETION SCREEN
+       ========================================================================= */
+    function renderQuestion() {
+      if (activeList.length === 0) {
+        const isQueueFinished = state.activeMode === 'all';
+        questionTextEl.innerHTML = `
+          <div class="text-center py-10">
+            <p class="text-4xl mb-3">${isQueueFinished ? '🎉' : '🎯'}</p>
+            <p class="text-base font-bold text-white">${isQueueFinished ? 'Milestone Reached! Unseen Queue Cleared!' : 'No questions in this filter.'}</p>
+            <p class="text-xs text-slate-400 mt-2 max-w-sm mx-auto leading-relaxed">
+              ${isQueueFinished 
+                ? 'You have completed all unseen questions in this queue! Review your past answers in History, or reset the unseen queue to practice again.' 
+                : 'Switch to another domain or mode to continue practicing.'}
+            </p>
+            ${isQueueFinished ? `
+              <div class="mt-5 flex items-center justify-center gap-2">
+                <button id="resetQueueFromCardBtn" class="py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs shadow-lg tap-press">
+                  Reset Unseen Queue
+                </button>
+                <button id="openHistFromCardBtn" class="py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs border border-slate-700 tap-press">
+                  View History
+                </button>
+              </div>
+            ` : ''}
+          </div>
+        `;
+        optionsContainerEl.innerHTML = '';
+        explanationBoxEl.classList.add('hidden');
+        questionIndexBadge.textContent = '0 / 0';
+        jumpIndicator.textContent = '0/0';
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+        revealBtn.disabled = true;
+
+        if (isQueueFinished) {
+          const resetCardBtn = document.getElementById('resetQueueFromCardBtn');
+          const histCardBtn = document.getElementById('openHistFromCardBtn');
+          if (resetCardBtn) resetCardBtn.onclick = resetUnseenQueue;
+          if (histCardBtn) histCardBtn.onclick = openHistoryModal;
+        }
+        return;
+      }
+
+      prevBtn.disabled = state.currentIndex <= 0;
+      nextBtn.disabled = false;
+      revealBtn.disabled = false;
+
+      const q = activeList[state.currentIndex];
+      const hasAnswered = state.userAnswers[q.id] !== undefined;
+      const userAnswer = state.userAnswers[q.id];
+
+      // Meta info
+      questionIndexBadge.textContent = `Q ${state.currentIndex + 1} / ${activeList.length}`;
+      questionTopicBadge.textContent = q.topic;
+      jumpIndicator.textContent = `${state.currentIndex + 1}/${activeList.length}`;
+      questionTextEl.textContent = q.question;
+      statActiveDomain.textContent = state.activeDomain;
+
+      // Bookmark
+      if (state.bookmarked[q.id]) {
+        bookmarkIcon.classList.add('fill-amber-400', 'text-amber-400');
+        bookmarkIcon.classList.remove('fill-none');
+      } else {
+        bookmarkIcon.classList.remove('fill-amber-400', 'text-amber-400');
+        bookmarkIcon.classList.add('fill-none');
+      }
+
+      // Options
+      optionsContainerEl.innerHTML = '';
+      const letters = ['A', 'B', 'C', 'D'];
+
+      q.options.forEach((optText, idx) => {
+        const btn = document.createElement('button');
+        btn.className = `w-full text-left p-3.5 rounded-xl border transition-all text-xs sm:text-sm flex items-start gap-3 tap-press `;
+
+        let style = "bg-slate-800/80 hover:bg-slate-750 border-slate-700/80 text-slate-200";
+
+        if (hasAnswered) {
+          if (idx === q.answer) {
+            style = "bg-emerald-950/80 border-emerald-500/90 text-emerald-100 font-medium shadow-md shadow-emerald-950/40";
+          } else if (idx === userAnswer && userAnswer !== q.answer) {
+            style = "bg-rose-950/80 border-rose-500/90 text-rose-100 font-medium";
+          } else {
+            style = "bg-slate-800/40 border-slate-800/60 text-slate-500 opacity-60";
+          }
+        }
+
+        btn.className += style;
+        btn.innerHTML = `
+          <span class="flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center font-mono font-bold text-xs ${
+            hasAnswered && idx === q.answer
+              ? 'bg-emerald-500 text-slate-950'
+              : hasAnswered && idx === userAnswer
+              ? 'bg-rose-500 text-white'
+              : 'bg-slate-700/90 text-slate-300'
+          }">${letters[idx]}</span>
+          <span class="flex-1 leading-relaxed">${optText}</span>
+        `;
+
+        if (!hasAnswered) {
+          btn.onclick = () => selectOption(q, idx);
+        }
+
+        optionsContainerEl.appendChild(btn);
+      });
+
+      // Explanation Box
+      if (hasAnswered) {
+        explanationBoxEl.classList.remove('hidden');
+        explanationTextEl.textContent = q.explanation;
+        correctBadgeEl.textContent = `Correct: Option ${letters[q.answer]}`;
+
+        const isCorrect = userAnswer === q.answer;
+        const feedbackIcon = document.getElementById('feedbackIcon');
+        const feedbackTitle = document.getElementById('feedbackTitle');
+
+        if (isCorrect) {
+          feedbackIcon.textContent = '✨';
+          feedbackTitle.textContent = 'Well Done — Concept Verified';
+          feedbackTitle.className = 'text-xs font-bold tracking-wider uppercase text-emerald-400';
+          explanationBoxEl.className = 'mt-5 p-4 rounded-xl bg-emerald-950/20 border border-emerald-800/50 transition-all';
+        } else {
+          feedbackIcon.textContent = '💡';
+          feedbackTitle.textContent = 'Concept Analysis & Distractor Logic';
+          feedbackTitle.className = 'text-xs font-bold tracking-wider uppercase text-indigo-300';
+          explanationBoxEl.className = 'mt-5 p-4 rounded-xl bg-slate-900 border border-slate-800 transition-all';
+        }
+      } else {
+        explanationBoxEl.classList.add('hidden');
+      }
+
+      // Progress bar
+      const pct = ((state.currentIndex + 1) / activeList.length) * 100;
+      progressBar.style.width = `${pct}%`;
+    }
+
+    function selectOption(question, chosenIdx) {
+      const isCorrect = chosenIdx === question.answer;
+      state.userAnswers[question.id] = chosenIdx;
+      state.completedQueue[question.id] = Date.now();
+
+      if (!isCorrect) {
+        state.mistakes[question.id] = true;
+        HapticAudio.playError();
+      } else {
+        delete state.mistakes[question.id];
+        HapticAudio.playSuccess();
+      }
+
+      saveState();
+      updateUI();
+    }
+
+    function updateUI() {
+      // Counts
+      const totalQuestionsCount = QUESTIONS_DATA.length;
+      const completedCount = Object.keys(state.userAnswers).length;
+      const unseenCount = Math.max(0, totalQuestionsCount - completedCount);
+      const savedCount = Object.keys(state.bookmarked).filter(k => state.bookmarked[k]).length;
+      const mistakeCount = Object.keys(state.mistakes).length;
+
+      unseenCountEl.textContent = unseenCount;
+      savedCountEl.textContent = savedCount;
+      mistakeCountEl.textContent = mistakeCount;
+      streakCountEl.textContent = state.streak || 1;
+
+      // Stats
+      const answeredKeys = Object.keys(state.userAnswers);
+      let correct = 0;
+      answeredKeys.forEach(qId => {
+        const item = QUESTIONS_DATA.find(q => q.id === parseInt(qId));
+        if (item && state.userAnswers[qId] === item.answer) {
+          correct++;
+        }
+      });
+
+      const acc = completedCount > 0 ? Math.round((correct / completedCount) * 100) : 0;
+      statAnswered.textContent = completedCount;
+      statAccuracy.textContent = `${acc}%`;
+
+      // Tabs style
+      document.querySelectorAll('.mode-tab').forEach(tab => {
+        const mode = tab.getAttribute('data-mode');
+        if (mode === state.activeMode) {
+          tab.className = 'mode-tab px-3 py-1.5 rounded-lg font-semibold whitespace-nowrap bg-indigo-600 text-white shadow-sm';
+        } else {
+          tab.className = 'mode-tab px-3 py-1.5 rounded-lg font-medium whitespace-nowrap bg-slate-800 hover:bg-slate-750 text-slate-300';
+        }
+      });
+
+      renderQuestion();
+    }
+
+    function resetUnseenQueue() {
+      if (confirm("Reset practice queue? This will mark all questions as unseen for future rounds while preserving your bookmark and streak data.")) {
+        state.userAnswers = {};
+        state.mistakes = {};
+        state.completedQueue = {};
+        state.currentIndex = 0;
+        saveState();
+        filterQuestions();
+        showToast('Queue refreshed with all 102 questions!');
+      }
+    }
+
+    /* =========================================================================
+       HISTORY & PAST ATTEMPTS DRAWER
+       ========================================================================= */
+    const historyModal = document.getElementById('historyModal');
+    const historyListContainer = document.getElementById('historyListContainer');
+    let historyFilter = 'all'; // 'all', 'correct', 'mistakes'
+
+    function openHistoryModal() {
+      historyFilter = 'all';
+      renderHistoryList();
+      historyModal.classList.remove('hidden');
+    }
+
+    function closeHistoryModal() {
+      historyModal.classList.add('hidden');
+    }
+
+    function renderHistoryList() {
+      const answeredIds = Object.keys(state.userAnswers).map(id => parseInt(id));
+      const answeredQuestions = QUESTIONS_DATA.filter(q => answeredIds.includes(q.id));
+
+      const correctList = answeredQuestions.filter(q => state.userAnswers[q.id] === q.answer);
+      const mistakeList = answeredQuestions.filter(q => state.userAnswers[q.id] !== q.answer);
+
+      document.getElementById('histCountAll').textContent = answeredQuestions.length;
+      document.getElementById('histCountCorrect').textContent = correctList.length;
+      document.getElementById('histCountMistakes').textContent = mistakeList.length;
+
+      // Filter tabs active styles
+      const filterBtns = {
+        all: document.getElementById('histFilterAll'),
+        correct: document.getElementById('histFilterCorrect'),
+        mistakes: document.getElementById('histFilterMistakes')
+      };
+
+      Object.keys(filterBtns).forEach(k => {
+        if (k === historyFilter) {
+          filterBtns[k].className = 'px-2.5 py-1 rounded-lg bg-indigo-600 text-white font-medium';
+        } else {
+          filterBtns[k].className = 'px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 font-medium hover:bg-slate-750';
+        }
+      });
+
+      let displayList = answeredQuestions;
+      if (historyFilter === 'correct') displayList = correctList;
+      if (historyFilter === 'mistakes') displayList = mistakeList;
+
+      historyListContainer.innerHTML = '';
+      if (displayList.length === 0) {
+        historyListContainer.innerHTML = `
+          <div class="py-12 text-center text-slate-400">
+            <p class="text-2xl mb-1">📝</p>
+            <p class="text-xs">No questions found in this history view.</p>
+          </div>
+        `;
+        return;
+      }
+
+      displayList.forEach(q => {
+        const userChoiceIdx = state.userAnswers[q.id];
+        const isCorrect = userChoiceIdx === q.answer;
+        const letters = ['A', 'B', 'C', 'D'];
+
+        const item = document.createElement('div');
+        item.className = `p-3.5 rounded-xl border bg-slate-900/90 ${
+          isCorrect ? 'border-emerald-800/50' : 'border-rose-800/50'
+        } space-y-2`;
+
+        item.innerHTML = `
+          <div class="flex items-center justify-between text-[11px]">
+            <span class="px-2 py-0.5 rounded font-mono font-semibold ${
+              isCorrect ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-rose-950 text-rose-400 border border-rose-800'
+            }">
+              ${isCorrect ? '✓ Correct' : '✕ Missed'}
+            </span>
+            <span class="text-slate-400 font-mono text-[10px]">${q.topic}</span>
+          </div>
+          <p class="text-slate-200 font-medium leading-relaxed">${q.question}</p>
+          <div class="text-[11px] space-y-1 bg-slate-950/60 p-2.5 rounded-lg border border-slate-800">
+            <p class="text-slate-300">Your Answer: <span class="${isCorrect ? 'text-emerald-400 font-bold' : 'text-rose-400 font-bold'}">(${letters[userChoiceIdx]}) ${q.options[userChoiceIdx]}</span></p>
+            ${!isCorrect ? `<p class="text-emerald-400">Correct Answer: <strong>(${letters[q.answer]}) ${q.options[q.answer]}</strong></p>` : ''}
+          </div>
+          <div class="text-[11px] text-slate-400 leading-relaxed pt-1">
+            <strong class="text-indigo-300">Explanation:</strong> ${q.explanation}
+          </div>
+          <div class="flex items-center justify-end gap-2 pt-1 border-t border-slate-800/60">
+            <button class="retry-q-btn text-[11px] text-indigo-400 hover:text-indigo-300 font-semibold px-2 py-1 rounded bg-slate-800 hover:bg-slate-750" data-qid="${q.id}">
+              Practice Again ↺
+            </button>
+          </div>
+        `;
+        historyListContainer.appendChild(item);
+      });
+
+      // Bind retries
+      document.querySelectorAll('.retry-q-btn').forEach(b => {
+        b.onclick = (e) => {
+          const qid = parseInt(e.currentTarget.getAttribute('data-qid'));
+          delete state.userAnswers[qid];
+          saveState();
+          closeHistoryModal();
+          filterQuestions();
+          const targetIdx = activeList.findIndex(x => x.id === qid);
+          if (targetIdx !== -1) {
+            state.currentIndex = targetIdx;
+            renderQuestion();
+          }
+          showToast('Question restored to active practice!');
+        };
+      });
+    }
+
+    document.getElementById('historyOpenBtn').onclick = openHistoryModal;
+    document.getElementById('closeHistoryBtn').onclick = closeHistoryModal;
+    document.getElementById('histFilterAll').onclick = () => { historyFilter = 'all'; renderHistoryList(); };
+    document.getElementById('histFilterCorrect').onclick = () => { historyFilter = 'correct'; renderHistoryList(); };
+    document.getElementById('histFilterMistakes').onclick = () => { historyFilter = 'mistakes'; renderHistoryList(); };
+    document.getElementById('resetHistoryBtn').onclick = resetUnseenQueue;
+
+    /* =========================================================================
+       CONTROLS & NAVIGATION
+       ========================================================================= */
+    function goNext() {
+      if (state.currentIndex < activeList.length - 1) {
+        state.currentIndex++;
+        renderQuestion();
+      } else {
+        state.currentIndex = 0; // Wrap around
+        renderQuestion();
+      }
+    }
+
+    function goPrev() {
+      if (state.currentIndex > 0) {
+        state.currentIndex--;
+        renderQuestion();
+      }
+    }
+
+    function toggleBookmark() {
+      const q = activeList[state.currentIndex];
+      if (!q) return;
+      if (state.bookmarked[q.id]) {
+        delete state.bookmarked[q.id];
+      } else {
+        state.bookmarked[q.id] = true;
+      }
+      HapticAudio.vibrate([20]);
+      saveState();
+      updateUI();
+    }
+
+    function toggleExplanation() {
+      if (explanationBoxEl.classList.contains('hidden')) {
+        const q = activeList[state.currentIndex];
+        if (!q) return;
+        explanationTextEl.textContent = q.explanation;
+        correctBadgeEl.textContent = `Correct: Option ${['A','B','C','D'][q.answer]}`;
+        explanationBoxEl.classList.remove('hidden');
+      } else {
+        explanationBoxEl.classList.add('hidden');
+      }
+    }
+
+    nextBtn.onclick = goNext;
+    prevBtn.onclick = goPrev;
+    bookmarkBtn.onclick = toggleBookmark;
+    revealBtn.onclick = toggleExplanation;
+
+    // Mode tabs
+    document.querySelectorAll('.mode-tab').forEach(tab => {
+      tab.onclick = () => {
+        const m = tab.getAttribute('data-mode');
+        state.activeMode = m;
+        if (m === 'drill') {
+          // Shuffle drill
+          activeList.sort(() => Math.random() - 0.5);
+          state.currentIndex = 0;
+        } else {
+          state.currentIndex = 0;
+        }
+        filterQuestions();
+      };
+    });
+
+    // Audio toggle
+    audioToggleBtn.onclick = () => {
+      state.audioEnabled = !state.audioEnabled;
+      HapticAudio.enabled = state.audioEnabled;
+      if (state.audioEnabled) {
+        audioIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072M18.364 5.636a9 9 0 010 12.728M11 5L6 9H2v6h4l5 4V5z"/>';
+        audioToggleBtn.classList.remove('opacity-50');
+      } else {
+        audioIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/>';
+        audioToggleBtn.classList.add('opacity-50');
+      }
+      saveState();
+    };
+
+    // Keyboard controls
+    window.addEventListener('keydown', (e) => {
+      if (document.activeElement.tagName === 'INPUT') {
+        if (e.key === 'Escape') closeSearchModal();
+        return;
+      }
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'n') {
+        e.preventDefault();
+        goNext();
+      } else if (e.key === 'ArrowLeft' || e.key === 'p') {
+        e.preventDefault();
+        goPrev();
+      } else if (e.key === 'b') {
+        toggleBookmark();
+      } else if (e.key === 'e') {
+        toggleExplanation();
+      } else if (e.key === 'h') {
+        openHistoryModal();
+      } else if (['1', '2', '3', '4', 'a', 'b', 'c', 'd'].includes(e.key.toLowerCase())) {
+        const q = activeList[state.currentIndex];
+        if (!q || state.userAnswers[q.id] !== undefined) return;
+        const keyMap = { '1': 0, 'a': 0, '2': 1, 'b': 1, '3': 2, 'c': 2, '4': 3, 'd': 3 };
+        const idx = keyMap[e.key.toLowerCase()];
+        if (idx !== undefined && idx < q.options.length) {
+          selectOption(q, idx);
+        }
+      }
+    });
+
+    // Touch Swipe Navigation for one-handed practice
+    let touchStartX = 0;
+    let touchStartY = 0;
+    document.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    document.addEventListener('touchend', (e) => {
+      const diffX = e.changedTouches[0].screenX - touchStartX;
+      const diffY = e.changedTouches[0].screenY - touchStartY;
+      if (Math.abs(diffX) > 60 && Math.abs(diffY) < 50) {
+        if (diffX < 0) goNext();
+        else goPrev();
+      }
+    }, { passive: true });
+
+    /* =========================================================================
+       MODALS: DOMAINS, MATRIX JUMP, SEARCH
+       ========================================================================= */
+    // Domain Filter Modal
+    const filterModal = document.getElementById('filterModal');
+    const categoryListContainer = document.getElementById('categoryListContainer');
+
+    function populateDomains() {
+      const domains = ['All', ...new Set(QUESTIONS_DATA.map(q => q.topic))];
+      categoryListContainer.innerHTML = '';
+      domains.forEach(dom => {
+        const btn = document.createElement('button');
+        const isSelected = state.activeDomain === dom;
+        const count = dom === 'All' ? QUESTIONS_DATA.length : QUESTIONS_DATA.filter(q => q.topic === dom).length;
+        btn.className = `w-full text-left p-3 rounded-xl border flex items-center justify-between text-xs sm:text-sm ${
+          isSelected
+            ? 'bg-indigo-600/20 border-indigo-500 text-white font-semibold'
+            : 'bg-slate-800/80 border-slate-700/80 text-slate-300 hover:bg-slate-750'
+        }`;
+        btn.innerHTML = `<span>${dom}</span><span class="text-xs px-2 py-0.5 rounded-full bg-slate-700 font-mono text-slate-300">${count}</span>`;
+        btn.onclick = () => {
+          state.activeDomain = dom;
+          state.currentIndex = 0;
+          filterModal.classList.add('hidden');
+          filterQuestions();
+        };
+        categoryListContainer.appendChild(btn);
+      });
+    }
+
+    document.getElementById('filterModalBtn').onclick = () => {
+      populateDomains();
+      filterModal.classList.remove('hidden');
+    };
+    document.getElementById('closeFilterBtn').onclick = () => filterModal.classList.add('hidden');
+    document.getElementById('applyFiltersBtn').onclick = () => filterModal.classList.add('hidden');
+    document.getElementById('clearFiltersBtn').onclick = () => {
+      state.activeDomain = 'All';
+      filterQuestions();
+      filterModal.classList.add('hidden');
+    };
+
+    // Navigator Matrix
+    const jumpModal = document.getElementById('jumpModal');
+    const jumpGrid = document.getElementById('jumpGrid');
+
+    function populateJumpGrid() {
+      jumpGrid.innerHTML = '';
+      activeList.forEach((q, idx) => {
+        const btn = document.createElement('button');
+        const hasAnswered = state.userAnswers[q.id] !== undefined;
+        const isCorrect = hasAnswered && state.userAnswers[q.id] === q.answer;
+        const isCurrent = idx === state.currentIndex;
+
+        let cls = "h-9 rounded-lg font-mono text-xs font-semibold flex items-center justify-center border transition tap-press ";
+        if (isCurrent) {
+          cls += "ring-2 ring-indigo-400 border-white text-white ";
+        }
+
+        if (hasAnswered) {
+          cls += isCorrect
+            ? "bg-emerald-600 border-emerald-500 text-white "
+            : "bg-rose-600 border-rose-500 text-white ";
+        } else {
+          cls += "bg-slate-800 border-slate-700 text-slate-400 hover:text-white ";
+        }
+
+        btn.className = cls;
+        btn.textContent = idx + 1;
+        btn.onclick = () => {
+          state.currentIndex = idx;
+          renderQuestion();
+          jumpModal.classList.add('hidden');
+        };
+        jumpGrid.appendChild(btn);
+      });
+    }
+
+    document.getElementById('jumpModalBtn').onclick = () => {
+      populateJumpGrid();
+      jumpModal.classList.remove('hidden');
+    };
+    document.getElementById('closeJumpBtn').onclick = () => jumpModal.classList.add('hidden');
+
+    // Search
+    const searchModal = document.getElementById('searchModal');
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+
+    function openSearchModal() {
+      searchModal.classList.remove('hidden');
+      searchInput.value = '';
+      searchInput.focus();
+      renderSearchResults('');
+    }
+
+    function closeSearchModal() {
+      searchModal.classList.add('hidden');
+    }
+
+    function renderSearchResults(query) {
+      const qLower = query.toLowerCase().trim();
+      const matches = QUESTIONS_DATA.filter(q =>
+        q.question.toLowerCase().includes(qLower) ||
+        q.topic.toLowerCase().includes(qLower) ||
+        q.explanation.toLowerCase().includes(qLower)
+      ).slice(0, 25);
+
+      searchResults.innerHTML = '';
+      if (matches.length === 0) {
+        searchResults.innerHTML = `<div class="p-4 text-center text-slate-400 text-xs">No matching machine learning concepts found.</div>`;
+        return;
+      }
+
+      matches.forEach(q => {
+        const item = document.createElement('div');
+        item.className = 'py-2.5 px-2 hover:bg-slate-800/80 rounded-lg cursor-pointer tap-press transition';
+        item.innerHTML = `
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-indigo-950 text-indigo-300 font-semibold">${q.topic}</span>
+            <span class="text-xs text-slate-400">#${q.id}</span>
+          </div>
+          <p class="text-xs text-slate-200 line-clamp-2">${q.question}</p>
+        `;
+        item.onclick = () => {
+          state.activeMode = 'drill'; // view question directly even if answered
+          state.activeDomain = 'All';
+          activeList = [...QUESTIONS_DATA];
+          state.currentIndex = activeList.findIndex(x => x.id === q.id);
+          closeSearchModal();
+          updateUI();
+        };
+        searchResults.appendChild(item);
+      });
+    }
+
+    document.getElementById('searchOpenBtn').onclick = openSearchModal;
+    document.getElementById('closeSearchBtn').onclick = closeSearchModal;
+    searchInput.addEventListener('input', (e) => renderSearchResults(e.target.value));
+
+    /* =========================================================================
+       OFFLINE SERVICE WORKER (Data URL Blob)
+       ========================================================================= */
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        const swScript = `
+          const CACHE_NAME = 'ml-onthego-cache-v2';
+          self.addEventListener('install', (e) => {
+            self.skipWaiting();
+          });
+          self.addEventListener('activate', (e) => {
+            e.waitUntil(clients.claim());
+          });
+          self.addEventListener('fetch', (e) => {
+            e.respondWith(
+              fetch(e.request).catch(() => caches.match(e.request))
+            );
+          });
+        `;
+        const blob = new Blob([swScript], { type: 'application/javascript' });
+        navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
+      });
+    }
+
+    // Network status indicator
+    window.addEventListener('online', () => {
+      const b = document.getElementById('offlineBadge');
+      if (b) {
+        b.textContent = 'Online';
+        b.className = 'text-[9px] uppercase font-bold tracking-widest px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30';
+      }
+    });
+    window.addEventListener('offline', () => {
+      const b = document.getElementById('offlineBadge');
+      if (b) {
+        b.textContent = 'Offline Active';
+        b.className = 'text-[9px] uppercase font-bold tracking-widest px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30';
+      }
+    });
+
+    // Reliable boot handler
+    function initApp() {
+      try {
+        loadState();
+        filterQuestions();
+      } catch (err) {
+        console.error("Initialization error:", err);
+        // Fallback to guarantee questions render even if local storage is corrupt
+        state = {
+          currentIndex: 0,
+          activeMode: 'all',
+          activeDomain: 'All',
+          userAnswers: {},
+          bookmarked: {},
+          mistakes: {},
+          completedQueue: {},
+          audioEnabled: true,
+          streak: 1,
+          lastDate: new Date().toDateString()
+        };
+        filterQuestions();
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
+  </script>
+</body>
+</html>

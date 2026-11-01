@@ -1,0 +1,24 @@
+{
+  "name": "ML on the Go | Graduate Machine Learning PWA",
+  "short_name": "ML on the Go",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0D1117",
+  "theme_color": "#0D1117",
+  "description": "ML on the Go | Graduate Machine Learning PWA — Progressive Web App hosted on GitHub Pages",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
